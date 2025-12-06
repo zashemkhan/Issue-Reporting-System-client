@@ -23,7 +23,7 @@ const Navbar = () => {
       </NavLink> */}
       <NavLink>
         <li>
-          <button className="bg-[#25408f] text-white font-semibold btn rounded-md">Login</button>
+          <button className="bg-[#25408f] text-white font-semibold btn rounded-md outline-none">Login</button>
         </li>
       </NavLink>
     </>

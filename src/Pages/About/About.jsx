@@ -2,8 +2,8 @@ import React from 'react';
 
 const About = () => {
   return (
-    <div className='max-w-[1400px] mx-auto '>
-      <section className="bg-white rounded-lg shadow p-6 max-w-4xl mx-auto mt-6">
+    <div className='max-w-[1400px] mx-auto bg-white rounded-lg  p-6  mt-6'>
+    
 <h1 className="text-3xl font-bold">About InfraReport</h1>
 <p className="text-gray-700 mt-4">
 InfraReport is a digital platform that enables citizens to report public infrastructure issues such as potholes, broken streetlights, water leakage, blocked drainage, and damaged footpaths. The system helps government staff verify, assign, and resolve these issues efficiently.
@@ -29,7 +29,7 @@ InfraReport is a digital platform that enables citizens to report public infrast
 <p className="text-gray-700 mt-6">
 InfraReport ensures transparency, accountability, and faster public service delivery, making the city a better place for everyone.
 </p>
-</section>
+
     </div>
   );
 };
