@@ -49,7 +49,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {open && <ul className="md:hidden mt-4 flex flex-col gap-4 text-gray-700 bg-gray-50 p-4 rounded-lg shadow-inner">{links}</ul>}
+      {open && <ul className="md:hidden mt-4 flex flex-col gap-4 text-gray-700 bg-gray-50 p-4 rounded-lg shadow">{links}</ul>}
     </nav>
   );
 };
