@@ -4,8 +4,8 @@ import { Facebook, Instagram, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <div className="bg-[#edf2ff]">
-      <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 p-10">
+    <div className="bg-[#edf2ff] py-10">
+      <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-lg:mx-4">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2">
             <span className="text-2xl">🛠️</span>
@@ -35,19 +35,24 @@ const Footer = () => {
             </NavLink>
           </ul>
         </div>
-        <div className='flex gap-3'>
-        <a href="#">
-           <Facebook />
-        </a>
-        <a href="#">
+        <div className="flex gap-3">
+          <a href="#">
+            <Facebook />
+          </a>
+          <a href="#">
             <Instagram />
-        </a>
-        <a href="#">
-             <Linkedin />
-        </a>
-         
+          </a>
+          <a href="#">
+            <Linkedin />
+          </a>
         </div>
+       
       </div>
+       <div className='flex justify-between  max-md:flex-col mx-auto max-w-[1400px]   p-6 bg-[#e7edfc] shadow mt-7 rounded-md max-lg:mx-4'>
+          <p>© 2025 CityFix portal & Solutions. All Right Reserved.</p>
+          <p>Privacy Policy Terms & Conditions</p>
+          
+        </div>
     </div>
   );
 };

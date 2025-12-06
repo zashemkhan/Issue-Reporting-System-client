@@ -7,20 +7,14 @@ const Navbar = () => {
 
   const links = (
     <>
-      <NavLink to="/"
-      className={({isActive}) => ` ${isActive ? 'bg-[#caeb66]' : ''} px-5 py-1.5 rounded-md hover:bg-[#e7e7e8]`}
-      >
-  
+      <NavLink to="/" className={({ isActive }) => ` ${isActive ? 'text-[#1e91f4]' : ''} px-5 py-1.5 rounded-md font-medium hover:bg-[#e7e7e8]`}>
         <li>Home</li>
       </NavLink>
 
-
-   <NavLink to="/allissues"
-        className={({isActive}) => ` ${isActive ? 'bg-[#caeb66]' : ''} px-5 py-1.5 rounded-md hover:bg-[#e7e7e8]`} >
-        <li >All Issues</li>
-      </NavLink> 
-      <NavLink to="/about"
-     className={({isActive}) => ` ${isActive ? 'bg-[#caeb66]' : ''} px-5 py-1.5 rounded-md hover:bg-[#e7e7e8]`} >
+      <NavLink to="/allissues" className={({ isActive }) => ` ${isActive ? 'text-[#1e91f4]' : ''} px-5 py-1.5 rounded-md font-medium hover:bg-[#e7e7e8]`}>
+        <li>All Issues</li>
+      </NavLink>
+      <NavLink to="/about" className={({ isActive }) => ` ${isActive ? 'text-[#1e91f4]' : ''} px-5 py-1.5 rounded-md font-medium  hover:bg-[#e7e7e8]`}>
         <li>About</li>
       </NavLink>
       {/* <NavLink
@@ -29,7 +23,7 @@ const Navbar = () => {
       </NavLink> */}
       <NavLink>
         <li>
-          <button className="bg-[#caeb66] font-semibold btn rounded-md">Login</button>
+          <button className="bg-[#25408f] text-white font-semibold btn rounded-md">Login</button>
         </li>
       </NavLink>
     </>
