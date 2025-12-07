@@ -9,6 +9,8 @@ const Error = () => {
       <Link to="/" className="bg-[#25408f] text-white btn">
         Go Back Home
       </Link>
+      o
+      <p>error page</p>
     </div>
 
   );
