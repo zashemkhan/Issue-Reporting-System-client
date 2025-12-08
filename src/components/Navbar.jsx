@@ -85,7 +85,7 @@ const Navbar = () => {
             <div className="dropdown-menu absolute top-15 right-0 max-md:left-0 z-99 flex w-[200px] flex-col gap-3 rounded-md bg-white px-3 py-2 shadow transition-all duration-3000">
               <h1 className="text-2xl font-bold">{user.displayName}</h1>
               <NavLink
-                to="/dd"
+                to="/dashboard"
                 className={({ isActive }) =>
                   ` ${isActive ? 'text-[#1e91f4]' : ''} rounded-md px-5 py-1.5 font-medium hover:bg-[#e7e7e8]`
                 }

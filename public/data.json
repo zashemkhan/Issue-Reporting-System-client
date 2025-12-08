@@ -1,0 +1,123 @@
+[
+  {
+    "id": "bs-001",
+    "title": "Broken streetlight near Central Park",
+    "category": "Broken Streetlight",
+    "image": "https://i.ibb.co/FkQm062c/photorealistic-style-clouds-light-1.jpg",
+    "status": "Open",
+    "priority": "High",
+    "location": "Central Park, Sector 4, Dhaka",
+    "upvotes": 23,
+    "description": "Streetlight not working for 3 nights, area is dark and unsafe.",
+    "createdAt": "2025-11-28T19:20:00Z"
+  },
+  {
+    "id": "bs-002",
+    "title": "Flickering lamp post on Riverside Rd",
+    "category": "Broken Streetlight",
+    "image": "https://i.ibb.co/4Hy5Tx9/img.jpg",
+    "status": "In Progress",
+    "priority": "Normal",
+    "location": "Riverside Rd near Bus Stop B2, Dhaka",
+    "upvotes": 8,
+    "description": "Lamp flickers intermittently causing visibility issues for pedestrians.",
+    "createdAt": "2025-11-30T07:45:00Z"
+  },
+  {
+    "id": "ph-001",
+    "title": "Large pothole by School Entrance",
+    "category": "Pothole",
+    "image": "https://i.ibb.co/Qv47hZrS/potholes.jpg",
+    "status": "Open",
+    "priority": "High",
+    "location": "Maple St & 3rd Ave, Near Greenfield School, Dhaka",
+    "upvotes": 41,
+    "description": "Deep pothole causing traffic slowdowns and vehicle damage.",
+    "createdAt": "2025-11-25T12:10:00Z"
+  
+  },
+  {
+    "id": "ph-002",
+    "title": "Series of small potholes on Market Lane",
+    "category": "Pothole",
+    "image": "https://i.ibb.co/fzsM3N8b/potholes-1.jpg",
+    "status": "Open",
+    "priority": "Normal",
+    "location": "Market Lane (outside East Market), Dhaka",
+    "upvotes": 12,
+    "description": "Multiple shallow potholes forming across the lane after rains.",
+    "createdAt": "2025-11-27T09:30:00Z"
+  },
+  {
+    "id": "wl-001",
+    "title": "Water leakage from main pipe at Block C",
+    "category": "Water Leakage",
+    "image": "https://i.ibb.co/1fPhRtNG/plumbing-repair-1.jpg",
+    "status": "In Progress",
+    "priority": "High",
+    "location": "Block C, Housing Complex A, Dhaka",
+    "upvotes": 30,
+    "description": "Continuous leakage flooding pedestrian walkway and undermining pavement.",
+    "createdAt": "2025-11-26T16:00:00Z"
+  },
+  {
+    "id": "wl-002",
+    "title": "Seepage near underground drain on Hill Road",
+    "category": "Water Leakage",
+    "image": "https://i.ibb.co/b5ZfBRf1/water-leakage.jpg",
+    "status": "Open",
+    "priority": "Normal",
+    "location": "Hill Road opposite Pharmacy 9, Dhaka",
+    "upvotes": 5,
+    "description": "Slow seepage after recent rains causing slippery surface.",
+    "createdAt": "2025-11-29T11:05:00Z"
+  },
+  {
+    "id": "gf-001",
+    "title": "Garbage overflow at Sector 7 container",
+    "category": "Garbage Overflow",
+    "image": "https://i.ibb.co/kgzLJmWh/pollution-concept-water-with-garbage.jpg",
+    "status": "Open",
+    "priority": "High",
+    "location": "Sector 7 Waste Collection Point, Dhaka",
+    "upvotes": 52,
+    "description": "Container overflowing for 2 days, foul smell and stray animals present.",
+    "createdAt": "2025-11-24T06:50:00Z"
+  },
+  {
+    "id": "gf-002",
+    "title": "Garbage piles beside Alley 12",
+    "category": "Garbage Overflow",
+    "image": "https://i.ibb.co/4R9Hy5sr/Garbage-Overflow.webp",
+    "status": "In Progress",
+    "priority": "Normal",
+    "location": "Alley 12, Near Vegetable Market, Dhaka",
+    "upvotes": 14,
+    "description": "Loose garbage bags left uncollected creating blockage.",
+    "createdAt": "2025-11-28T08:25:00Z"
+  },
+  {
+    "id": "df-001",
+    "title": "Damaged footpath with broken slabs",
+    "category": "Damaged Footpath",
+    "image": "https://i.ibb.co/mCmsKZKf/Damaged-Footpath.jpg",
+    "status": "Open",
+    "priority": "High",
+    "location": "Main Walkway, University Campus, Dhaka",
+    "upvotes": 27,
+    "description": "Several broken slabs creating trip hazards for students and elderly.",
+    "createdAt": "2025-11-20T14:15:00Z"
+  },
+  {
+    "id": "df-002",
+    "title": "Uneven footpath near Bus Stop 5",
+    "category": "Damaged Footpath",
+    "image": "https://i.ibb.co/gbfPsPMP/Damaged-Footpath1.webp",
+    "status": "Open",
+    "priority": "Normal",
+    "location": "Bus Stop 5, Ring Road, Dhaka",
+    "upvotes": 9,
+    "description": "Raised sections and cracks causing difficulty for wheelchair users.",
+    "createdAt": "2025-11-30T10:40:00Z"
+  }
+]
