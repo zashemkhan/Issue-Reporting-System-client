@@ -1,5 +1,7 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router';
+import { TbReport } from "react-icons/tb";
+import { ToastContainer } from 'kitzo/react';
 
 const DashBoard = () => {
   return (
@@ -37,6 +39,14 @@ const DashBoard = () => {
         </li>
 
         {/* List item */}
+       
+  <li>
+              {/* public report */}
+              <NavLink className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="public-report" to="/dashboard/public-report">
+                <TbReport />
+                <span className="is-drawer-close:hidden">Public Report</span>
+              </NavLink>
+            </li>
         <li>
           <button className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Settings">
             {/* Settings icon */}
@@ -47,6 +57,7 @@ const DashBoard = () => {
       </ul>
     </div>
   </div>
+  <ToastContainer position="top-right" />
 </div>
   );
 };
