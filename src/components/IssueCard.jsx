@@ -4,7 +4,8 @@ import { NavLink } from 'react-router';
 const IssueCard = ({ issue }) => {
   const { image, title, category, location, _id, upvotes, date } = issue;
   return (
-    <div className="flex max-w-md flex-col gap-4 rounded-lg shadow-md hover:scale-104 transition ease-in-out duration-300">
+
+     <div className="flex max-w-md flex-col gap-4 rounded-lg shadow-md hover:scale-104 transition ease-in-out duration-300 max-md:mx-auto max-md:w-full">
       <img
         src={image}
         alt={issue.title}
@@ -28,6 +29,7 @@ const IssueCard = ({ issue }) => {
         </NavLink>
       </div>
     </div>
+
   );
 };
 

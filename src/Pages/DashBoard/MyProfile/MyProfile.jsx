@@ -6,10 +6,21 @@ const MyProfile = () => {
   console.log(user);
   return (
     <div>
-      <h1>my profile</h1>
-      <h1>{user.displayName}</h1>
-      <h1>{user.email}</h1>
-      <img src={user.photoURL} alt="" />
+      <h4 className='text-2xl font-bold'>Profile</h4>
+      <div className='flex items-center gap-10 '>
+ <div className='w-[200px] rounded-full'>
+   <img className='w-[200px] rounded-full' src={user.photoURL} alt="" />
+ </div>
+  <div>
+    
+ {/* <p>{user.displayName}</p> */}
+ <input type="text" className='border' />
+
+ <p>{user.email}</p>
+  </div>
+      </div>
+     
+    
     </div>
   );
 };

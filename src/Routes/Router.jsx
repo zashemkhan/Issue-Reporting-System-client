@@ -19,6 +19,13 @@ import StaffDashboardLayout from '../staff/dashboard/StaffDashboardLayout';
 import StaffDashboard from '../staff/dashboard/StaffDashboard';
 import RoleBasedRedirect from './RoleBasedRedirect';
 import AuthProtectedRoute from './AuthProtectedRoute';
+import AdminProfile from '../Admin/dashboard/AdminProfile';
+import AdminAllIssues from '../Admin/dashboard/AdminAllIssues';
+import AdminManageusers from '../Admin/dashboard/AdminManageusers';
+import AdminManageStaff from '../Admin/dashboard/AdminManageStaff';
+import Paymentspage from '../Admin/dashboard/Paymentspage';
+import StaffProfile from '../staff/dashboard/StaffProfile';
+import StaffAssignedissues from '../staff/dashboard/StaffAssignedissues';
 
 export const router = createBrowserRouter([
   {
@@ -106,8 +113,28 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: '',
+        path: 'admindashboard',
         element: <AdminDashboard />,
+      },
+      {
+        path: 'adminallissues',
+        element: <AdminAllIssues></AdminAllIssues>,
+      },
+      {
+        path: 'manageusers',
+        element:<AdminManageusers></AdminManageusers>,
+      },
+      {
+        path: 'managestaff',
+        element:<AdminManageStaff></AdminManageStaff>,
+      },
+      {
+        path: 'paymentspage',
+        element:<Paymentspage></Paymentspage>,
+      },
+      {
+        path: 'profile',
+        element: <AdminProfile></AdminProfile>,
       },
     ],
   },
@@ -122,8 +149,16 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: '',
+        path: 'staffdashboard',
         element: <StaffDashboard />,
+      },
+      {
+        path: 'staffprofile',
+        element: <StaffProfile></StaffProfile>,
+      },
+      {
+        path: 'staffassignissues',
+        element:<StaffAssignedissues></StaffAssignedissues>,
       },
     ],
   },
