@@ -17,18 +17,18 @@ const AllIssues = () => {
 
   //
 
-  const filteredIssues = issues.filter((item) => {
-    const matchesSearch = item.title
-      .toLowerCase()
-      .includes(searchText.toLowerCase());
+  // const filteredIssues = issues.filter((item) => {
+  //   const matchesSearch = item.title
+  //     .toLowerCase()
+  //     .includes(searchText.toLowerCase());
 
-    const matchesCategory =
-      Iscategory === ''
-        ? true
-        : item.category.toLowerCase() === Iscategory.toLowerCase();
+  //   const matchesCategory =
+  //     Iscategory === ''
+  //       ? true
+  //       : item.category.toLowerCase() === Iscategory.toLowerCase();
 
-    return matchesSearch && matchesCategory;
-  });
+  //   return matchesSearch && matchesCategory;
+  // });
 
   if (isLoading) {
     return (
@@ -68,7 +68,7 @@ const AllIssues = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-10 py-10 md:grid-cols-2 lg:grid-cols-3">
-        {filteredIssues.length === 0 ? (
+        {/* {filteredIssues.length === 0 ? (
           <div className="flex flex-col items-center justify-center">
             <p className="mb-6 text-4xl font-bold text-gray-700"> Not Found</p>
           </div>
@@ -79,7 +79,14 @@ const AllIssues = () => {
               issue={issue}
             ></IssueCard>
           ))
-        )}
+        )} */}
+        {
+          issues.map(issue => <IssueCard
+           key={issue._id}
+              issue={issue}>
+
+          </IssueCard>)
+        }
       </div>
     </div>
   );
