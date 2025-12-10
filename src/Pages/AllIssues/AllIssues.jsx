@@ -15,6 +15,7 @@ const AllIssues = () => {
     },
   });
 
+  console.log(issues)
   //
 
   // const filteredIssues = issues.filter((item) => {
@@ -81,7 +82,7 @@ const AllIssues = () => {
           ))
         )} */}
         {
-          issues.map(issue => <IssueCard
+         Array.isArray(issues) && issues.map(issue => <IssueCard
            key={issue._id}
               issue={issue}>
 
