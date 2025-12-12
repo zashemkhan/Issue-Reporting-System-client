@@ -41,7 +41,8 @@ let freeUser = 3;
       image: uploadedImageUrl,
       upvotes: 0,
       date: format(new Date(), 'MM/dd/yyyy, hh:mm a'),
-      creatorEmai : user.email
+      createdBy: user.uid,
+      
     };
 
     axiosSecure.post('/issues', issueData).then((res) => {

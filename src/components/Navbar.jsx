@@ -61,10 +61,7 @@ const Navbar = () => {
       >
         <li>About</li>
       </NavLink>
-      {/* <NavLink
-      className={({isActive}) => ` ${isActive ? 'bg-[#caeb66]' : ''} btn`}>
-        <li >Report Issue</li>
-      </NavLink> */}
+
       {user ? (
         <div className="relative">
           <div
