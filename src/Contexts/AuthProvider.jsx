@@ -8,7 +8,7 @@ import {
   signInWithPopup,
   updateProfile,
 } from 'firebase/auth';
-import useAxiosSecure from './../Hooks/useAxiosSecure';
+import useAxiosSecure from '../Hooks/useAxiosSecure';
 
 export const AuthContext = createContext(null);
 
@@ -19,7 +19,8 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [userCreating, setUserCreating] = useState(false);
 
-  const server = useAxiosSecure();
+  // const server = useAxiosSecure();
+  const axiosSecure = useAxiosSecure()
 
   const registerUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -38,7 +39,7 @@ const AuthProvider = ({ children }) => {
     const user = auth.currentUser;
 
     try {
-      const { data } = await server.post('/user/social-login', {
+      const { data } = await axiosSecure.post('/user/social-login', {
         displayName: user.displayName,
         photoURL: user.photoURL,
       });
@@ -58,7 +59,7 @@ const AuthProvider = ({ children }) => {
     setUserCreating(true);
     await updateProfile(auth.currentUser, profile);
 
-    const { data } = await server.post('/user/create', {
+    const { data } = await axiosSecure.post('/user/create', {
       displayName: profile.displayName,
       photoURL: profile.photoURL,
     });
@@ -73,7 +74,7 @@ const AuthProvider = ({ children }) => {
       if (userCreating) return;
 
       if (currentUser) {
-        const { data } = await server.get('/user/user-profile');
+        const { data } = await axiosSecure.get('/user/user-profile');
         setUser(data);
       } else {
         setUser(null);
