@@ -18,7 +18,7 @@ const PublicReport = () => {
     formState: { errors },
   } = useForm();
 
-// let freeUser = 3;
+  // let freeUser = 3;
   const handleForm = async (data) => {
     // if(user === freeUser) return
 
@@ -42,7 +42,7 @@ const PublicReport = () => {
       upvotes: 0,
       date: format(new Date(), 'MM/dd/yyyy, hh:mm a'),
       createdBy: user.uid,
-      
+      upvotedBy: [],
     };
 
     axiosSecure.post('/issues', issueData).then((res) => {
@@ -51,7 +51,6 @@ const PublicReport = () => {
     });
   };
 
- 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-xl rounded-2xl bg-white p-10 shadow-xl">

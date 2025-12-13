@@ -7,35 +7,26 @@ const AllIssues = () => {
   const [searchText, setSearchText] = useState('');
   const [Iscategory, setIscategory] = useState('');
   const axiosSecure = useAxiosSecure();
-  const { data: issues = [], isLoading , refetch} = useQuery({
-    queryKey: ['issues'],
-    queryFn: async () => {
-      const res = await axiosSecure.get('/issues');
-      return res.data;
-    },
-  });
 
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <span className="loading loading-ring loading-lg"></span>
-        <span className="loading loading-ring loading-lg"></span>
-        <span className="loading loading-ring loading-lg"></span>
-      </div>
-    );
-  }
-  const filteredIssues = issues.filter((item) => {
-    const matchesSearch = item.title
-      .toLowerCase()
-      .includes(searchText.toLowerCase());
+  
 
-    const matchesCategory =
-      Iscategory === ''
-        ? true
-        : item.category.toLowerCase() === Iscategory.toLowerCase();
+  const [totalissues , settoalIssues] = useState(0)
+  const [totalpage, setTotalpage] = useState(0)
+  const [currentPage, setCurrentpage] = useState(0)
+  const limit = 5;
 
-    return matchesSearch && matchesCategory;
-  });
+const { data: allissues = [], isLoading, refetch } = useQuery({
+  queryKey: ['issues',  currentPage], 
+  queryFn: async () => {
+    const res = await axiosSecure.get(`/issues?limit=${limit}&skip=${currentPage * limit}`);
+        settoalIssues(res.data.total);
+        const page = Math.ceil(res.data.total / limit)
+      
+       setTotalpage(page)
+    return res.data.result; 
+  },
+});
+
 
   if (isLoading) {
     return (
@@ -49,7 +40,7 @@ const AllIssues = () => {
   return (
     <div className="mx-auto max-w-[1400px]">
       <h2 className="py-2 text-4xl font-bold max-sm:px-4">
-        AllIssues: {issues.length}
+        AllIssues: ({totalissues})
       </h2>
 
       <div className="flex justify-between gap-10 max-sm:px-4">
@@ -75,12 +66,12 @@ const AllIssues = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-10 py-10 md:grid-cols-2 lg:grid-cols-3">
-        {filteredIssues.length === 0 ? (
+        {allissues.length === 0 ? (
           <div className="flex flex-col items-center justify-center">
             <p className="mb-6 text-4xl font-bold text-gray-700"> Not Found</p>
           </div>
         ) : (
-          filteredIssues.map((issue) => (
+          allissues.map((issue) => (
             <IssueCard 
             
               key={issue._id}
@@ -89,6 +80,23 @@ const AllIssues = () => {
             ></IssueCard>
           ))
         )}
+      </div>
+
+      <div className='flex justify-center gap-3 flex-wrap py-10'>
+        {
+          currentPage > 0 &&   <button onClick={() => setCurrentpage(currentPage - 1)} className='btn'>prev</button>
+        }
+      
+       {
+         [...Array(totalpage).keys()].map((i) => (
+          <button onClick={() => setCurrentpage(i)} className={`btn ${i === currentPage && 'bg-[#25408f] text-white'}`}
+          >{i + 1}</button>
+         ))
+       }
+       {
+         currentPage < totalpage - 1 &&   <button onClick={() => setCurrentpage(currentPage + 1)}  className='btn'>next</button>
+       }
+         
       </div>
     </div>
   );
