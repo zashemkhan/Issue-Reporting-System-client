@@ -4,28 +4,41 @@ import { useQuery } from '@tanstack/react-query';
 import IssueCard from '../../components/IssueCard';
 
 const AllIssues = () => {
-  const [searchText, setSearchText] = useState('');
-  const [Iscategory, setIscategory] = useState('');
   const axiosSecure = useAxiosSecure();
 
-  
+  const [totalissues, settoalIssues] = useState(0);
+  const [totalpage, setTotalpage] = useState(0);
+  const [currentPage, setCurrentpage] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [searchText, setSearchText] = useState('');
+  const limit = 7;
 
-  const [totalissues , settoalIssues] = useState(0)
-  const [totalpage, setTotalpage] = useState(0)
-  const [currentPage, setCurrentpage] = useState(0)
-  const limit = 5;
+  const {
+    data: allissues = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ['issues', currentPage, selectedCategory, searchText],
+    queryFn: async () => {
+      const categoryQuery = selectedCategory
+        ? `&category=${selectedCategory}`
+        : '';
+      const searchQuery = searchText ? `&search=${searchText}` : '';
+      const res = await axiosSecure.get(
+        `/issues?limit=${limit}&skip=${currentPage * limit}${categoryQuery}${searchQuery}`,
+      );
+      settoalIssues(res.data.total);
+      const page = Math.ceil(res.data.total / limit);
 
-const { data: allissues = [], isLoading, refetch } = useQuery({
-  queryKey: ['issues',  currentPage], 
-  queryFn: async () => {
-    const res = await axiosSecure.get(`/issues?limit=${limit}&skip=${currentPage * limit}`);
-        settoalIssues(res.data.total);
-        const page = Math.ceil(res.data.total / limit)
-      
-       setTotalpage(page)
-    return res.data.result; 
-  },
-});
+      setTotalpage(page);
+      return res.data.result;
+    },
+  });
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+    setCurrentpage(0);
+  };
 
 
   if (isLoading) {
@@ -49,12 +62,17 @@ const { data: allissues = [], isLoading, refetch } = useQuery({
             type="text"
             placeholder="Search issues..."
             className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-gray-400 focus:outline-none"
-            onChange={(e) => setSearchText(e.target.value)}
+            value={searchText}
+             onChange={(e) => setSearchText(e.target.value)}
+
           />
+       
         </div>
+
         <select
           className="rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-gray-400 focus:outline-none"
-          onChange={(e) => setIscategory(e.target.value)}
+          value={selectedCategory}
+          onChange={handleCategoryChange}
         >
           <option value="">All Category</option>
           <option value="Broken Streetlights">Broken Streetlights</option>
@@ -72,8 +90,7 @@ const { data: allissues = [], isLoading, refetch } = useQuery({
           </div>
         ) : (
           allissues.map((issue) => (
-            <IssueCard 
-            
+            <IssueCard
               key={issue._id}
               issue={issue}
               refetch={refetch}
@@ -82,24 +99,46 @@ const { data: allissues = [], isLoading, refetch } = useQuery({
         )}
       </div>
 
-      <div className='flex justify-center gap-3 flex-wrap py-10'>
-        {
-          currentPage > 0 &&   <button onClick={() => setCurrentpage(currentPage - 1)} className='btn'>prev</button>
-        }
-      
-       {
-         [...Array(totalpage).keys()].map((i) => (
-          <button onClick={() => setCurrentpage(i)} className={`btn ${i === currentPage && 'bg-[#25408f] text-white'}`}
-          >{i + 1}</button>
-         ))
-       }
-       {
-         currentPage < totalpage - 1 &&   <button onClick={() => setCurrentpage(currentPage + 1)}  className='btn'>next</button>
-       }
-         
+      <div className="flex flex-wrap justify-center gap-3 py-10">
+        {currentPage > 0 && (
+          <button
+            onClick={() => setCurrentpage(currentPage - 1)}
+            className="btn"
+          >
+            prev
+          </button>
+        )}
+
+        {[...Array(totalpage).keys()].map((i, s) => (
+          <button
+            key={s}
+            onClick={() => setCurrentpage(i)}
+            className={`btn ${i === currentPage && 'bg-[#25408f] text-white'}`}
+          >
+            {i + 1}
+          </button>
+        ))}
+        {currentPage < totalpage - 1 && (
+          <button
+            onClick={() => setCurrentpage(currentPage + 1)}
+            className="btn"
+          >
+            next
+          </button>
+        )}
       </div>
     </div>
   );
 };
 
 export default AllIssues;
+
+
+
+
+
+
+
+
+
+
