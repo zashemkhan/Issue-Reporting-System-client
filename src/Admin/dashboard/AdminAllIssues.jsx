@@ -8,17 +8,18 @@ const AdminAllIssues = () => {
   const [openmodal, setOpenmodal] = useState();
   const [selectedIssue, setSelectedIssue] = useState(null);
   const {
-    data: issues = [],
+    data: adminAllissues = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ['issues'],
+    queryKey: ['adminall-issues'],
     queryFn: async () => {
       const res = await axiosSecure.get('/issues');
       return res.data.result;
     },
   });
 
+  console.log(adminAllissues)
   const { data: staffList = [] } = useQuery({
     queryKey: ['staffList'],
     queryFn: async () => {
@@ -36,7 +37,7 @@ const AdminAllIssues = () => {
   };
 
   const handleAssign = async (issueId, staffEmail) => {
-    console.log(issueId, staffEmail);
+
     await axiosSecure.post(`/admin/assign-issue`, {
       issueId,
       staffEmail,
@@ -49,7 +50,7 @@ const AdminAllIssues = () => {
   return (
     <div className="">
       <h2 className="py-2 text-4xl font-bold max-sm:px-4">
-        AllIssues: {issues.length}
+        AllIssues: {adminAllissues.length}
       </h2>
       <div className="overflow-x-auto">
         <table className="table-zebra table">
@@ -66,7 +67,7 @@ const AdminAllIssues = () => {
           </thead>
 
           <tbody>
-            {issues.map((issue, i) => (
+            {adminAllissues.map((issue, i) => (
               <tr key={issue._id}>
                 <th>{i + 1}</th>
                 <td>{issue.title}</td>

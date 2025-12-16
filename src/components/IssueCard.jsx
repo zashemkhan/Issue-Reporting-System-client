@@ -28,7 +28,7 @@ const IssueCard = ({ issue, refetch }) => {
           <h2 className="text-[20px] font-bold">{title}</h2>
           <p className="text-sm text-gray-600">Category: {category}</p>
           <p className="text-sm text-gray-500">Location: {location}</p>
-          {/* <p className="text-sm text-gray-500"> boostPrice: { boostPrice}</p> */}
+
 
           <div className='flex  gap-2  items-center'>
             <p

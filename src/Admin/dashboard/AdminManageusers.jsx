@@ -15,11 +15,11 @@ const AdminManageusers = () => {
 
 
   const handleBlock = async (id) => {
- console.log(id)
+    console.log(id);
   };
 
   const handleUnblock = async (id) => {
- console.log(id)
+    console.log(id);
   };
 
   return (
@@ -56,9 +56,11 @@ const AdminManageusers = () => {
                   </div>
                 </td>
                 <td>{u.email}</td>
+ 
                 <td>
-                  <button className="btn">view</button>
+                  {u.isSubscribed ? <span>Premium</span> : <span>Free</span>}
                 </td>
+
                 <td>
                   <div className="flex items-center gap-2">
                     <button

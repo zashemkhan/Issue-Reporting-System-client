@@ -11,7 +11,7 @@ const AllIssues = () => {
   const [currentPage, setCurrentpage] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchText, setSearchText] = useState('');
-  const limit = 7;
+  const limit = 5;
 
   const {
     data: allissues = [],
