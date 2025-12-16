@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import { format } from 'date-fns';
 import useAuth from '../../../Hooks/useAuth';
+import { useQuery } from '@tanstack/react-query';
 
 const ViewDetail = () => {
   const { user } = useAuth();
@@ -13,6 +14,17 @@ const ViewDetail = () => {
   const data = useLoaderData();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+
+
+
+const { data: users = [], isLoading } = useQuery({
+  queryKey: ['users'],
+  queryFn: async () => {
+    const res = await axiosSecure.get('/user/role');
+    return res.data;
+  },
+});
+const role = users.find(u => u.email === user?.email)?.role;
 
   const {
     register,
@@ -32,10 +44,12 @@ const ViewDetail = () => {
     _id,
     status,
     createdBy,
+    
   } = data;
 
+ 
   const handleDelete = (id) => {
-    // console.log(id)
+   
 
     Swal.fire({
       title: 'Are you sure?',
@@ -130,7 +144,7 @@ const ViewDetail = () => {
         </div>
 
         {/* Action Buttons */}
-        {createdBy === user.uid && (
+        {(createdBy === user.uid || role === 'admin' ) && (
           <div className="flex gap-3">
             {/* Boost Button */}
             {priority !== 'high' && (

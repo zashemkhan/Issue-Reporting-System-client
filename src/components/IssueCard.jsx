@@ -29,9 +29,9 @@ const IssueCard = ({ issue, refetch }) => {
 
   const handleCount = (_id) => {
     if (!user) return navigate('/login');
-    if (votedBy.includes(user.uid))
+    if (votedBy.includes(user?.uid))
       return toast.error('You have already upvoted this issue');
-    setVotedBy((prev) => [...prev, user.uid]);
+    setVotedBy((prev) => [...prev, user?.uid]);
 
     axoisSecure.patch('/issue/upvotes', { _id }).then((res) => {
       refetch();
@@ -68,12 +68,12 @@ const IssueCard = ({ issue, refetch }) => {
           </NavLink>
 
           {reactLocation.pathname.includes('allissues') &&
-            createdBy !== user.uid && (
+            createdBy !== user?.uid && (
               <button
                 onClick={() => handleCount(_id)}
                 className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
               >
-                {user && votedBy.includes(user.uid) ? (
+                {user && votedBy.includes(user?.uid) ? (
                   <FaThumbsUp />
                 ) : (
                   <FaRegThumbsUp />
