@@ -51,7 +51,7 @@ const Paymentspage = () => {
   };
 
   return (
-    <div className="max-w-[1440px] mx-auto mt-10 px-4">
+    <div className=" mt-10 px-4">
       <h1 className="text-4xl font-bold mb-6">Payments Page</h1>
 
       <div className="overflow-x-auto">

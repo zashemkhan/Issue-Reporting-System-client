@@ -45,7 +45,7 @@ const MyProfile = () => {
   };
 
   return (
-    <div className="mx-auto mt-20 flex max-w-4xl flex-col gap-10 rounded-xl bg-white p-8 shadow-lg md:flex-row md:p-10">
+    <div className=" mt-20 flex max-w-4xl flex-col gap-10 rounded-xl bg-white p-8  md:flex-row md:p-10">
       {/* Profile Section */}
       <div className="flex flex-col items-center gap-4 md:items-start">
         <img

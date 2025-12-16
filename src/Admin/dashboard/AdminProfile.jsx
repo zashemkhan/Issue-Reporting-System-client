@@ -45,7 +45,7 @@ const AdminProfile = () => {
   };
   return (
  
-    <div className="flex flex-col md:flex-row gap-10 bg-white p-8 md:p-10 shadow-lg rounded-xl max-w-4xl mx-auto mt-20">
+    <div className="flex flex-col md:flex-row gap-10  p-8 md:p-10  max-w-4xl mt-20">
   {/* Profile Section */}
   <div className="flex flex-col items-center md:items-start gap-4">
     <img

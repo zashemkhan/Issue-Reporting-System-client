@@ -1,22 +1,19 @@
 import React from 'react';
 import { Link, NavLink, Outlet } from 'react-router';
 import { TbPointerFilled, TbReport } from 'react-icons/tb';
-import { MdOutlineReportProblem } from "react-icons/md";
+import { MdOutlineReportProblem } from 'react-icons/md';
 import { ToastContainer } from 'kitzo/react';
 import { LayoutDashboard, UserPlus } from 'lucide-react';
 
 const DashBoard = () => {
-
-
-
   return (
-    <div className="drawer lg:drawer-open ">
+    <div className="drawer  lg:drawer-open">
       <input
         id="my-drawer-4"
         type="checkbox"
         className="drawer-toggle"
       />
-      <div className="drawer-content ">
+      <div className="drawer-content">
         {/* Navbar */}
         <nav className="navbar bg-base-300 w-full">
           <label
@@ -45,12 +42,12 @@ const DashBoard = () => {
               to="/"
               className="text-2xl font-bold"
             >
-             CityFix Portal
+              CityFix Portal
             </Link>
           </div>
         </nav>
         {/* Page content here */}
-   
+
         <Outlet></Outlet>
       </div>
 
@@ -73,8 +70,7 @@ const DashBoard = () => {
                 >
                   {/* dashboard */}
 
-
-                    <LayoutDashboard />
+                  <LayoutDashboard />
                   <span className="is-drawer-close:hidden">DashBoard</span>
                 </button>
               </li>
@@ -87,7 +83,7 @@ const DashBoard = () => {
                 data-tip="My-Issues-Page"
                 to="/dashboard/my-issues-page"
               >
-                  <MdOutlineReportProblem size={24} />
+                <MdOutlineReportProblem size={24} />
                 <span className="is-drawer-close:hidden">My Issues Page</span>
               </NavLink>
             </li>
@@ -109,7 +105,7 @@ const DashBoard = () => {
                 data-tip="my-profile"
                 to="/dashboard/my-profile"
               >
-                   <UserPlus size={24} /> 
+                <UserPlus size={24} />
                 <span className="is-drawer-close:hidden">My profile</span>
               </NavLink>
             </li>
