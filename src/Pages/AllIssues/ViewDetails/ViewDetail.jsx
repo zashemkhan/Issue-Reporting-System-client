@@ -144,7 +144,7 @@ const role = users.find(u => u.email === user?.email)?.role;
         </div>
 
         {/* Action Buttons */}
-        {(createdBy === user.uid || role === 'admin' ) && (
+        {(createdBy === user.uid || role === 'admin' )  && (
           <div className="flex gap-3">
             {/* Boost Button */}
             {priority !== 'high' && (
@@ -156,12 +156,15 @@ const role = users.find(u => u.email === user?.email)?.role;
               </Link>
             )}
             {/* Update */}
-            <button
+         
+            {
+              status === 'pending'  &&    <button
               onClick={() => handleEdit(_id)}
               className="rounded-lg bg-blue-500 px-6 py-3 font-semibold text-white shadow-md transition hover:bg-blue-600"
             >
               Update
             </button>
+            }
             {/* Delete */}
             <button
               onClick={() => handleDelete(_id)}
