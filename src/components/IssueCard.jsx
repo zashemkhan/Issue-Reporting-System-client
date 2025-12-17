@@ -23,6 +23,8 @@ const IssueCard = ({ issue, refetch }) => {
     date,
     boostPrice,
     createdBy,
+    status,
+    priority,
   } = issue;
 
   const [votedBy, setVotedBy] = useState(() => [...upvotedBy]);
@@ -41,7 +43,7 @@ const IssueCard = ({ issue, refetch }) => {
   };
 
   return (
-    <div className="flex max-w-md flex-col gap-4 rounded-xl shadow-md transition max-md:mx-auto max-md:w-full">
+    <div className="relative flex max-w-md flex-col gap-4 rounded-xl shadow-md transition max-md:mx-auto max-md:w-full">
       <img
         src={image}
         alt={issue.title}
@@ -58,6 +60,12 @@ const IssueCard = ({ issue, refetch }) => {
           </div>
           <p className="mt-1 text-sm">{date}</p>
         </div>
+        <span className="absolute top-2 rounded-full bg-red-500 px-5 py-2 text-sm font-semibold text-white">
+          status: {status}
+        </span>
+        <span className="absolute top-2 right-2 rounded-full bg-white px-5 py-2 text-sm font-semibold">
+          priority : {priority}
+        </span>
 
         <div className="mt-4 flex gap-2">
           <NavLink

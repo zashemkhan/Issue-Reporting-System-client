@@ -31,7 +31,7 @@ const KeyFeatures = () => {
         <div className='flex gap-10 max-md:flex-col my-10'>
           {/* Upvote System */}
           <div className="mx-auto flex w-full flex-col items-center gap-5 rounded-md bg-white p-4 shadow transition-all duration-300 hover:-translate-y-2 hover:shadow-lg md:w-fit md:flex-row md:items-start">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#f4e6fb] md:h-10 md:w-10">
+            <div className="flex h-10 w-12 items-center justify-center rounded-full bg-[#f4e6fb] md:h-10 md:w-10">
               <BiLike className="text-2xl text-green-500 md:text-xl" />
             </div>
             <div className="text-center md:text-left">
@@ -47,7 +47,7 @@ const KeyFeatures = () => {
 
           {/* Admin Panel */}
           <div className="mx-auto flex w-full flex-col items-center gap-5 rounded-md bg-white p-4 shadow transition-all duration-300 hover:-translate-y-2 hover:shadow-lg md:w-fit md:flex-row md:items-start">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#f4e6fb] md:h-10 md:w-10">
+            <div className="flex h-10 w-12 items-center justify-center rounded-full bg-[#f4e6fb] md:h-10 md:w-10">
               <IoIosSettings className="text-2xl text-violet-500 md:text-xl" />
             </div>
             <div className="text-center md:text-left">

@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 @plugin 'daisyui';
 
-@media (pointer: fine) {
+@media (pointer:fine) {
   button {
     cursor: pointer;
   }

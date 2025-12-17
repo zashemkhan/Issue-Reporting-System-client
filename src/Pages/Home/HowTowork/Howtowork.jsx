@@ -14,7 +14,7 @@ const Howtowork = () => {
       <p className='text-center'>Capture a photo and provide details about the issue you've spotted in your neighborhood.</p>
     </div>
     <div className='bg-white shadow p-10 space-y-3 rounded-md hover:scale-104 transtion ease-in-out duration-300 '>
-     <div className='bg-white shadow rounded-full h-20 w-20 p-4 mx-auto grid place-content-center'>
+     <div className='bg-white shadow rounded-full h-20 w-20 p-4  mx-auto grid place-content-center'>
        <img src={img2} alt="" />
      </div>
       <h3 className='text-3xl font-bold text-center'>Step 2: Get Community Support</h3>
