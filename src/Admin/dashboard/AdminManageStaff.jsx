@@ -57,7 +57,11 @@ const AdminManageStaff = () => {
     }
   }
 
-  const { data: staffList = [], isLoading: staffListLoading , refetch} = useQuery({
+  const {
+    data: staffList = [],
+    isLoading: staffListLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['staff-list'],
     queryFn: async () => {
       const response = await axiosSecure.get('/admin/staff-list');
@@ -104,7 +108,7 @@ const AdminManageStaff = () => {
       if (result.isConfirmed) {
         axiosSecure.delete(`/admin/staff/${id}`).then((res) => {
           if (res.data.deletedCount) {
-            refetch()
+            refetch();
             Swal.fire({
               title: 'Deleted!',
               text: 'Your file has been deleted.',
@@ -129,12 +133,12 @@ const AdminManageStaff = () => {
           <div>Loading...</div>
         ) : (
           <div>
-            <div className="overflow-x-auto">
+            <div className="mt-4 overflow-x-auto rounded-md">
               <table className="table-zebra table">
                 {/* head */}
-                <thead>
+                <thead className="bg-slate-100 text-slate-700">
                   <tr>
-                    <th></th>
+                    <th>#</th>
                     <th>Staff</th>
                     <th>Email</th>
                     <th>Action</th>
@@ -159,15 +163,18 @@ const AdminManageStaff = () => {
                       <td>{s.email}</td>
                       <td>
                         <div className="flex items-center gap-2">
+                          {/* Update Button */}
                           <button
                             onClick={() => setUpdateModal(s)}
-                            className="btn "
+                            className="rounded-md bg-teal-600 px-4 py-2 text-white shadow transition-shadow hover:bg-teal-700"
                           >
-                            update
+                            Update
                           </button>
+
+                          {/* Delete Button */}
                           <button
                             onClick={() => handleDelete(s._id)}
-                            className="btn "
+                            className="rounded-md bg-red-600 px-4 py-2 text-white shadow transition-shadow hover:bg-red-700"
                           >
                             Delete
                           </button>
@@ -367,9 +374,8 @@ const AdminManageStaff = () => {
                 />
               </div>
 
-              <div className="mt-4 ">
-                <SubmitButton 
-                
+              <div className="mt-4">
+                <SubmitButton
                   isSubmitting={isUpdatingStaff}
                   text={'Update'}
                 />

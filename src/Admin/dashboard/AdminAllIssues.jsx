@@ -1,21 +1,48 @@
+
 import { useState } from 'react';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'kitzo/react';
 
+const statusColor = (status) => {
+  switch (status) {
+    case 'pending':
+      return 'bg-yellow-100 text-yellow-700';
+    case 'in-progress':
+      return 'bg-blue-100 text-blue-700';
+    case 'resolved':
+      return 'bg-green-100 text-green-700';
+    case 'rejected':
+      return 'bg-red-100 text-red-700';
+    default:
+      return 'bg-gray-100 text-gray-700';
+  }
+};
+
+const priorityColor = (priority) => {
+  switch (priority) {
+    case 'high':
+      return 'bg-red-100 text-red-700';
+ 
+    default:
+      return 'bg-gray-100 text-gray-700';
+  }
+};
+
 const AdminAllIssues = () => {
   const axiosSecure = useAxiosSecure();
-  const [openmodal, setOpenmodal] = useState();
+  const [openmodal, setOpenmodal] = useState(false);
   const [selectedIssue, setSelectedIssue] = useState(null);
+  const [isAssigning, setIsAssigning] = useState(false);
+
   const {
     data: adminAllissues = [],
-    isLoading,
     refetch,
   } = useQuery({
     queryKey: ['adminall-issues'],
     queryFn: async () => {
       const res = await axiosSecure.get('/issues');
-      return res.data.result;
+      return res.data.result || [];
     },
   });
 
@@ -23,7 +50,7 @@ const AdminAllIssues = () => {
     queryKey: ['staffList'],
     queryFn: async () => {
       const res = await axiosSecure.get('/admin/staff-list');
-      return res.data;
+      return res.data || [];
     },
   });
 
@@ -32,10 +59,9 @@ const AdminAllIssues = () => {
       issueId: id,
       status,
     });
+    toast.success(`Issue marked as ${status}`);
     refetch();
   };
-
-  const [isAssigning, setIsAssigning] = useState(false);
 
   const handleAssign = async (issueId, staffEmail) => {
     if (isAssigning) return;
@@ -45,22 +71,24 @@ const AdminAllIssues = () => {
       issueId,
       staffEmail,
     });
-    setOpenmodal(false);
+
     toast.success('Staff assigned successfully');
-    refetch();
+    setOpenmodal(false);
     setIsAssigning(false);
+    refetch();
   };
 
   return (
-    <div className="">
-      <h2 className="px-2 py-2 text-4xl font-bold max-sm:px-4 md:px-3">
-        AllIssues: {adminAllissues.length}
+    <div className="px-2 md:px-4">
+      <h2 className="py-4 text-3xl font-bold text-slate-800">
+        All Issues ({adminAllissues.length})
       </h2>
-      <div className="overflow-x-auto">
-        <table className="table-zebra table">
-          <thead>
+
+      <div className="overflow-x-auto rounded-xl bg-white shadow-sm">
+        <table className="table table-zebra">
+          <thead className="bg-slate-100 text-slate-700">
             <tr>
-              <th></th>
+              <th>#</th>
               <th>Title</th>
               <th>Category</th>
               <th>Status</th>
@@ -74,36 +102,54 @@ const AdminAllIssues = () => {
             {adminAllissues.map((issue, i) => (
               <tr key={issue._id}>
                 <th>{i + 1}</th>
-                <td>{issue.title}</td>
+                <td className="font-medium">{issue.title}</td>
                 <td>{issue.category}</td>
-                <td>{issue.status}</td>
-                <td>{issue.priority}</td>
+
+                <td>
+                  <span
+                    className={`rounded-full px-3 py-1 text-sm font-semibold ${statusColor(
+                      issue.status
+                    )}`}
+                  >
+                    {issue.status}
+                  </span>
+                </td>
+
+                <td>
+                  <span
+                    className={`rounded-full px-3 py-1 text-sm font-semibold ${priorityColor(
+                      issue.priority
+                    )}`}
+                  >
+                    {issue.priority}
+                  </span>
+                </td>
 
                 <td>
                   <button
                     disabled={issue.isAssigned}
                     onClick={() => {
-                      if (isAssigning) {
-                        toast.error('Wait while assigning issue');
-                        return;
-                      }
                       if (issue.status === 'rejected') {
-                        toast.error('Cannot assign staff to a rejected issue');
+                        toast.error(
+                          'Cannot assign staff to a rejected issue'
+                        );
                         return;
                       }
-
                       setSelectedIssue(issue);
                       setOpenmodal(true);
                     }}
-                    className="btn"
+                    className="btn btn-sm bg-blue-500 text-white hover:bg-blue-600 disabled:bg-gray-300"
                   >
-                    <span>Add staff</span>
+                    {issue.isAssigned ? 'Assigned' : 'Add Staff'}
                   </button>
                 </td>
-                <td>
+
+                <td className="flex gap-2">
                   <button
-                    onClick={() => hadleUpdateIssueStatus(issue._id, 'pending')}
-                    className="btn"
+                    onClick={() =>
+                      hadleUpdateIssueStatus(issue._id, 'pending')
+                    }
+                    className="btn btn-sm bg-yellow-500 text-white hover:bg-yellow-600"
                   >
                     Pending
                   </button>
@@ -111,7 +157,7 @@ const AdminAllIssues = () => {
                     onClick={() =>
                       hadleUpdateIssueStatus(issue._id, 'rejected')
                     }
-                    className="btn"
+                    className="btn btn-sm bg-red-500 text-white hover:bg-red-600"
                   >
                     Reject
                   </button>
@@ -121,21 +167,26 @@ const AdminAllIssues = () => {
           </tbody>
         </table>
       </div>
-      {/* Modal */}
+
+      {/* ===== MODAL ===== */}
       {openmodal && (
         <div
           onClick={() => setOpenmodal(false)}
-          className="fixed inset-0 flex items-center justify-center bg-black/10"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/30"
         >
           <div
             onClick={(e) => e.stopPropagation()}
             className="w-full max-w-[520px] rounded-xl bg-white p-6 shadow-2xl"
           >
+            <h3 className="mb-4 text-xl font-bold text-slate-800">
+              Assign Staff
+            </h3>
+
             <div className="overflow-x-auto">
-              <table className="table-zebra table">
-                <thead>
+              <table className="table table-zebra">
+                <thead className="bg-slate-100">
                   <tr>
-                    <th>Serial</th>
+                    <th>#</th>
                     <th>Name</th>
                     <th>Action</th>
                   </tr>
@@ -148,16 +199,16 @@ const AdminAllIssues = () => {
                       <td>{staff.displayName}</td>
                       <td>
                         <button
-                          className="btn"
-                          onClick={() => {
-                            if (isAssigning) {
-                              toast.error('Wait while assigning issue');
-                              return;
-                            }
-                            handleAssign(selectedIssue._id, staff.email);
-                          }}
+                          onClick={() =>
+                            handleAssign(
+                              selectedIssue._id,
+                              staff.email
+                            )
+                          }
+                          disabled={isAssigning}
+                          className="btn btn-sm bg-green-500 text-white hover:bg-green-600 disabled:bg-gray-300"
                         >
-                          <span>Assign</span>
+                          Assign
                         </button>
                       </td>
                     </tr>

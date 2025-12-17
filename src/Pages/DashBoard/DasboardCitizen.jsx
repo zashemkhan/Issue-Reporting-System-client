@@ -50,27 +50,37 @@ const DasboardCitizen = () => {
     <div className="px-2">
       <div className="mx-auto max-w-[1400px]">
         <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <div className="grid h-40 place-content-center rounded-md bg-white p-3 font-bold shadow">
-            <h4 className="text-2xl">Total issues submitted</h4>
-            <h5 className="text-center text-3xl">{totalIssues || 0}</h5>
-          </div>
-          <div className="grid h-40 place-content-center rounded-md bg-white p-3 font-bold shadow">
-            <h4 className="text-2xl">Total pending issues</h4>
-            <h5 className="text-center text-3xl">{totalPending || 0}</h5>
-          </div>
-          <div className="grid h-40 place-content-center rounded-md bg-white p-3 font-bold shadow">
-            <h4 className="text-2xl">Total in progress issues</h4>
-            <h5 className="text-center text-3xl">{totalInProgress || 0}</h5>
-          </div>
-          <div className="grid h-40 place-content-center rounded-md bg-white p-3 font-bold shadow">
-            <h4 className="text-2xl">Total Resolved issues</h4>
-            <h5 className="text-center text-3xl">{totalResolved || 0}</h5>
-          </div>
-          <div className="grid h-40 place-content-center rounded-md bg-white p-3 font-bold shadow">
-            <h4 className="text-2xl">Total payments</h4>
-            <h5 className="text-center text-3xl">{totalHighBoostPrice}</h5>
-          </div>
-        </div>
+  {/* Total Issues Submitted */}
+  <div className="grid h-40 place-content-center rounded-md bg-blue-100 p-4 font-bold shadow-md">
+    <h4 className="text-2xl text-blue-800">Total issues submitted</h4>
+    <h5 className="text-center text-3xl text-blue-900">{totalIssues || 0}</h5>
+  </div>
+
+  {/* Total Pending Issues */}
+  <div className="grid h-40 place-content-center rounded-md bg-yellow-100 p-4 font-bold shadow-md">
+    <h4 className="text-2xl text-yellow-800">Total pending issues</h4>
+    <h5 className="text-center text-3xl text-yellow-900">{totalPending || 0}</h5>
+  </div>
+
+  {/* Total In Progress Issues */}
+  <div className="grid h-40 place-content-center rounded-md bg-purple-100 p-4 font-bold shadow-md">
+    <h4 className="text-2xl text-purple-800">Total in progress issues</h4>
+    <h5 className="text-center text-3xl text-purple-900">{totalInProgress || 0}</h5>
+  </div>
+
+  {/* Total Resolved Issues */}
+  <div className="grid h-40 place-content-center rounded-md bg-green-100 p-4 font-bold shadow-md">
+    <h4 className="text-2xl text-green-800">Total Resolved issues</h4>
+    <h5 className="text-center text-3xl text-green-900">{totalResolved || 0}</h5>
+  </div>
+
+  {/* Total Payments */}
+  <div className="grid h-40 place-content-center rounded-md bg-teal-100 p-4 font-bold shadow-md">
+    <h4 className="text-2xl text-teal-800">Total payments</h4>
+    <h5 className="text-center text-3xl text-teal-900">{totalHighBoostPrice}</h5>
+  </div>
+</div>
+
         <div className="mt-20 h-72 w-full">
           <ResponsiveContainer
             width="100%"
@@ -84,6 +94,7 @@ const DasboardCitizen = () => {
               <Bar
                 dataKey="count"
                 barSize={35}
+                 fill="#3B82F6" 
                 radius={[6, 6, 0, 0]}
                 animationDuration={1200}
               />

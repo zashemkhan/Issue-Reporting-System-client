@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
 
+import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 
@@ -10,7 +10,7 @@ const AdminManageusers = () => {
     queryKey: ['manage-users'],
     queryFn: async () => {
       const res = await axiosSecure.get('/admin/manage-users');
-      return res.data;
+      return res.data || [];
     },
   });
 
@@ -20,105 +20,106 @@ const AdminManageusers = () => {
       text: 'This user will be blocked and cannot log in!',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#ef4444',
+      cancelButtonColor: '#64748b',
       confirmButtonText: 'Yes, block user!',
-      cancelButtonText: 'Cancel',
     });
 
     if (result.isConfirmed) {
       const res = await axiosSecure.patch(`/users/block/${id}`);
-
       if (res.data.modifiedCount) {
         refetch();
-        Swal.fire({
-          title: 'Blocked!',
-          text: 'The user has been blocked successfully.',
-          icon: 'success',
-        });
+        Swal.fire('Blocked!', 'User has been blocked.', 'success');
       }
     }
   };
+
   const handleUnblock = async (id) => {
-    
-      const result = await Swal.fire({
+    const result = await Swal.fire({
       title: 'Are you sure?',
       text: 'This user will be unblocked and can log in again!',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#22c55e',
+      cancelButtonColor: '#64748b',
       confirmButtonText: 'Yes, unblock user!',
-      cancelButtonText: 'Cancel',
     });
+
     if (result.isConfirmed) {
       const res = await axiosSecure.patch(`/users/unblock/${id}`);
       if (res.data.modifiedCount) {
-        refetch(); 
-        Swal.fire({
-          title: 'Unblocked!',
-          text: 'The user has been unblocked successfully.',
-          icon: 'success',
-        });
-    
+        refetch();
+        Swal.fire('Unblocked!', 'User has been unblocked.', 'success');
+      }
+    }
   };
-}
-  }
 
   return (
-    <div>
-      <h5 className="ml-4 text-4xl font-bold">
-        Manage users : {manageUser.length}
+    <div className="px-2 md:px-4">
+      <h5 className="py-4 text-3xl font-bold text-slate-800">
+        Manage Users ({manageUser.length})
       </h5>
-      <div className="overflow-x-auto">
-        <table className="table-zebra table">
-          {/* head */}
-          <thead>
+
+ 
+      <div className="overflow-x-auto rounded-xl bg-white shadow-sm">
+        <table className="table table-zebra">
+          <thead className="bg-slate-100 text-slate-700">
             <tr>
-              <th></th>
+              <th>#</th>
               <th>User</th>
               <th>Email</th>
-              <th>subscription</th>
+              <th>Subscription</th>
               <th>Action</th>
             </tr>
           </thead>
+
           <tbody>
             {manageUser.map((u, i) => (
               <tr key={u._id}>
                 <th>{i + 1}</th>
-                <td>
-                  <div className="flex items-center gap-2">
-                    <div className="size-5 overflow-hidden rounded-full">
-                      <img
-                        className="size-full object-cover object-center"
-                        src={u.photoURL}
-                        alt={`${u.displayName} profile image`}
-                      />
-                    </div>
-                    <h4 className="text-nowrap">{u.displayName}</h4>
-                  </div>
-                </td>
-                <td>{u.email}</td>
 
                 <td>
-                  {u.isSubscribed ? <span>Premium</span> : <span>Free</span>}
+                  <div className="flex items-center gap-2">
+                    <div className="h-8 w-8 overflow-hidden rounded-full ring-2 ring-slate-200">
+                      <img
+                        className="h-full w-full object-cover"
+                        src={u.photoURL}
+                        alt={u.displayName}
+                      />
+                    </div>
+                    <span className="font-medium">{u.displayName}</span>
+                  </div>
+                </td>
+
+                <td className="text-slate-600">{u.email}</td>
+
+                <td>
+                  {u.isSubscribed ? (
+                    <span className="rounded-full bg-violet-100 px-3 py-1 text-sm font-semibold text-violet-700">
+                      Premium
+                    </span>
+                  ) : (
+                    <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-slate-700">
+                      Free
+                    </span>
+                  )}
                 </td>
 
                 <td>
                   <div className="flex items-center gap-2">
                     <button
-                      className="btn"
                       onClick={() => handleBlock(u._id)}
                       disabled={u.isblock}
+                      className="btn btn-sm bg-red-500 text-white hover:bg-red-600 disabled:bg-gray-300"
                     >
                       Block
                     </button>
+
                     <button
-                      className="btn"
                       onClick={() => handleUnblock(u._id)}
+                      className="btn btn-sm bg-green-500 text-white hover:bg-green-600"
                     >
                       Unblock
-
                     </button>
                   </div>
                 </td>

@@ -19,7 +19,6 @@ const StaffAssignedissues = () => {
     },
   });
 
-  console.log(assignedIssues);
   const updateIssueStatus = async (issueId, status) => {
     await axiosSecure.patch('/staff/update-issue-status', {
       issueId,
@@ -42,9 +41,9 @@ const StaffAssignedissues = () => {
         <p>No assigned issues found.</p>
       )}
       {!isLoading && assignedIssues.length > 0 && (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto  rounded-xl bg-white shadow-sm mt-4">
           <table className="table-zebra table w-full min-w-[800px]">
-            <thead>
+            <thead className="bg-slate-100 text-slate-700">
               <tr>
                 <th>Issue Title</th>
                 <th>Status</th>
@@ -129,3 +128,6 @@ const StaffAssignedissues = () => {
 };
 
 export default StaffAssignedissues;
+
+
+

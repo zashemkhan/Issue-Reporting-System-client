@@ -60,10 +60,10 @@ const IssueCard = ({ issue, refetch }) => {
           </div>
           <p className="mt-1 text-sm">{date}</p>
         </div>
-        <span className="absolute top-2 rounded-full bg-red-500 px-5 py-2 text-sm font-semibold text-white">
+        <span className="absolute top-2 rounded-full bg-red-500 px-3 py-1 text-sm font-semibold text-white">
           status: {status}
         </span>
-        <span className="absolute top-2 right-2 rounded-full bg-white px-5 py-2 text-sm font-semibold">
+        <span className="absolute top-2 right-2 rounded-full bg-white px-3 py-1 text-sm font-semibold">
           priority : {priority}
         </span>
 

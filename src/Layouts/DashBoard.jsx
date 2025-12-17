@@ -40,7 +40,7 @@ const DashBoard = () => {
           <div className="px-4">
             <Link
               to="/"
-              className="text-2xl font-bold"
+              className="text-2xl font-bold text-[#1e91f4]"
             >
               CityFix Portal
             </Link>

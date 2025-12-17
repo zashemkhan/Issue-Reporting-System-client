@@ -46,15 +46,15 @@ export default function StaffDashboard() {
   return (
     <div className="px-2 md:px-3">
       <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="grid h-40 place-content-center rounded-md bg-white p-3 font-bold shadow">
+        <div className="grid h-40 place-content-center rounded-xl bg-slate-50 text-slate-800 shadow-sm">
           <h4 className="text-2xl">Assigned issues count</h4>
           <h5 className="text-center text-3xl">{AssignedIssues.length || 0}</h5>
         </div>
-        <div className="grid h-40 place-content-center rounded-md bg-white p-3 font-bold shadow">
+        <div className="grid h-40 place-content-center rounded-xl bg-green-50 text-green-700 shadow-sm">
           <h4 className="text-2xl">Issues resolved count</h4>
           <h5 className="text-center text-3xl">{totalResolved || 0}</h5>
         </div>
-        <div className="grid h-40 place-content-center rounded-md bg-white p-3 font-bold shadow">
+        <div  className="grid h-40 place-content-center rounded-xl bg-red-50 text-red-700 shadow-sm">
           <h4 className="text-2xl">Today's task</h4>
           <h5 className="text-center text-3xl">{todaysTasks}</h5>
         </div>
@@ -72,6 +72,7 @@ export default function StaffDashboard() {
             <Bar
               dataKey="count"
               barSize={35}
+               fill="#3B82F6" 
               radius={[6, 6, 0, 0]}
               animationDuration={1200}
             />
