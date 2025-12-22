@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import useAuth from '../../Hooks/useAuth';
-
 import {
   BarChart,
   Bar,
@@ -16,6 +15,7 @@ import {
 const DasboardCitizen = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+
   const { data: myIssues = [] } = useQuery({
     queryKey: ['my-issues', user?.email],
     queryFn: async () => {
@@ -23,20 +23,14 @@ const DasboardCitizen = () => {
       return res.data;
     },
   });
-  const totalPending = myIssues.filter(
-    (issue) => issue.status === 'pending',
-  ).length;
-  const totalInProgress = myIssues.filter(
-    (issue) => issue.status === 'in progress',
-  ).length;
-  const totalResolved = myIssues.filter(
-    (issue) => issue.status === 'resolved',
-  ).length;
-  const totalIssues = myIssues.length;
 
+  const totalPending = myIssues.filter(i => i.status === 'pending').length;
+  const totalInProgress = myIssues.filter(i => i.status === 'in progress').length;
+  const totalResolved = myIssues.filter(i => i.status === 'resolved').length;
+  const totalIssues = myIssues.length;
   const totalHighBoostPrice = myIssues
-    .filter((issue) => issue.priority === 'high')
-    .reduce((sum, issue) => sum + (issue.boostPrice || 0), 0);
+    .filter(i => i.priority === 'high')
+    .reduce((sum, i) => sum + (i.boostPrice || 0), 0);
 
   const chartData = [
     { name: 'Total', count: totalIssues },
@@ -46,57 +40,69 @@ const DasboardCitizen = () => {
     { name: 'Payment', count: totalHighBoostPrice },
   ];
 
+  // Card colors for visual diversity
+  const cardStyles = [
+    { bg: 'bg-indigo-100', text: 'text-indigo-800' },
+    { bg: 'bg-yellow-100', text: 'text-yellow-800' },
+    { bg: 'bg-purple-100', text: 'text-purple-800' },
+    { bg: 'bg-green-100', text: 'text-green-800' },
+    { bg: 'bg-pink-100', text: 'text-pink-800' },
+  ];
+
+  const cardTitles = [
+    'Total Issues Submitted',
+    'Total Pending Issues',
+    'Total In Progress Issues',
+    'Total Resolved Issues',
+    'Total Payments',
+  ];
+
+  const cardValues = [
+    totalIssues,
+    totalPending,
+    totalInProgress,
+    totalResolved,
+    totalHighBoostPrice,
+  ];
+
   return (
-    <div className="px-2">
+    <div className="px-4 py-10">
       <div className="mx-auto max-w-[1400px]">
-        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-  {/* Total Issues Submitted */}
-  <div className="grid h-40 place-content-center rounded-md bg-blue-100 p-4 font-bold shadow-md">
-    <h4 className="text-2xl text-blue-800">Total issues submitted</h4>
-    <h5 className="text-center text-3xl text-blue-900">{totalIssues || 0}</h5>
-  </div>
+        <h2 className="mb-8 text-3xl font-extrabold text-gray-800">
+          Citizen Dashboard
+        </h2>
 
-  {/* Total Pending Issues */}
-  <div className="grid h-40 place-content-center rounded-md bg-yellow-100 p-4 font-bold shadow-md">
-    <h4 className="text-2xl text-yellow-800">Total pending issues</h4>
-    <h5 className="text-center text-3xl text-yellow-900">{totalPending || 0}</h5>
-  </div>
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {cardTitles.map((title, index) => (
+            <div
+              key={index}
+              className={`${cardStyles[index].bg} group relative flex h-40 flex-col items-center justify-center rounded-xl p-6 font-bold shadow-md transition-transform hover:-translate-y-2 hover:shadow-xl`}
+            >
+              <h4 className={`text-lg ${cardStyles[index].text} mb-2`}>{title}</h4>
+              <h3 className={`text-3xl font-extrabold ${cardStyles[index].text}`}>
+                {cardValues[index] || 0}
+              </h3>
+              <div className="absolute -top-3 -right-3 h-12 w-12 rounded-full border-4 border-white bg-opacity-30 bg-gradient-to-tr from-white to-gray-200"></div>
+            </div>
+          ))}
+        </div>
 
-  {/* Total In Progress Issues */}
-  <div className="grid h-40 place-content-center rounded-md bg-purple-100 p-4 font-bold shadow-md">
-    <h4 className="text-2xl text-purple-800">Total in progress issues</h4>
-    <h5 className="text-center text-3xl text-purple-900">{totalInProgress || 0}</h5>
-  </div>
-
-  {/* Total Resolved Issues */}
-  <div className="grid h-40 place-content-center rounded-md bg-green-100 p-4 font-bold shadow-md">
-    <h4 className="text-2xl text-green-800">Total Resolved issues</h4>
-    <h5 className="text-center text-3xl text-green-900">{totalResolved || 0}</h5>
-  </div>
-
-  {/* Total Payments */}
-  <div className="grid h-40 place-content-center rounded-md bg-teal-100 p-4 font-bold shadow-md">
-    <h4 className="text-2xl text-teal-800">Total payments</h4>
-    <h5 className="text-center text-3xl text-teal-900">{totalHighBoostPrice}</h5>
-  </div>
-</div>
-
-        <div className="mt-20 h-72 w-full">
-          <ResponsiveContainer
-            width="100%"
-            height={300}
-          >
-            <BarChart data={chartData}>
-              <CartesianGrid strokeDasharray="5 5" />
-              <XAxis dataKey="name" />
-              <YAxis allowDecimals={false} />
+        {/* Bar Chart */}
+        <div className="mt-16 h-80 w-full rounded-xl bg-white p-4 shadow-md">
+          <h3 className="mb-4 text-xl font-bold text-gray-700">Issues Overview</h3>
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="5 5" stroke="#e0e0e0" />
+              <XAxis dataKey="name" tick={{ fill: '#555', fontWeight: 500 }} />
+              <YAxis allowDecimals={false} tick={{ fill: '#555', fontWeight: 500 }} />
               <Tooltip />
               <Bar
                 dataKey="count"
-                barSize={35}
-                 fill="#3B82F6" 
+                barSize={40}
+                fill="#8b0000"
                 radius={[6, 6, 0, 0]}
-                animationDuration={1200}
+                animationDuration={1000}
               />
             </BarChart>
           </ResponsiveContainer>

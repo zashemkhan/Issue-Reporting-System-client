@@ -2,7 +2,7 @@ import axios from 'axios';
 import { auth } from '../Firebase/FireBase.init';
 
 const axiosSecure = axios.create({
-  baseURL: import.meta.env.VITE_SERVER,
+  baseURL: import.meta.env.VITE_SERVER_URL,
 });
 
 axiosSecure.interceptors.request.use(async (config) => {

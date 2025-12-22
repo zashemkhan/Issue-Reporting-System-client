@@ -5,14 +5,12 @@ import { useQuery } from '@tanstack/react-query';
 
 const Payment = () => {
   const { issueId } = useParams();
-  // console.log(issueId)
   const axiosSecure = useAxiosSecure();
 
   const { isLoading, data: payment = {} } = useQuery({
     queryKey: ['paymentIssue', issueId],
     queryFn: async () => {
       const res = await axiosSecure.get(`/issue/payment/${issueId}`);
-
       return res.data;
     },
   });
@@ -22,9 +20,6 @@ const Payment = () => {
       email: payment.email,
       issueId: issueId,
     });
-
-    // console.log(res.data)
-    // Stripe session URL → redirect
     window.location.href = res.data.url;
     await axiosSecure.patch(`/issue/update-status/${issueId}`, {
       priority: 'high',
@@ -32,19 +27,33 @@ const Payment = () => {
   };
 
   if (isLoading) {
-    <p>loading...</p>;
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-gray-500 text-lg">Loading...</p>
+      </div>
+    );
   }
+
   return (
-    <div className="mt-20 flex items-center justify-center">
-      <div className="rounded-lg border border-gray-200 bg-white p-4 text-center shadow-md">
-        <h5 className="mb-2 text-2xl font-bold">Boost this Issue</h5>
-        <p className="mb-3">Increase priority to high for 100tk</p>
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
+      <div className="max-w-md w-full rounded-2xl bg-white p-8 shadow-xl border border-gray-200">
+        <h2 className="text-center text-3xl font-bold text-[#8b0000] mb-4">
+          Boost This Issue
+        </h2>
+        <p className="text-center text-gray-700 mb-6">
+          Increase the priority of your issue to <span className="font-semibold">High</span> for <span className="text-[#8b0000] font-bold">100tk</span>
+        </p>
+
         <button
           onClick={handlePay}
-          className="btn rounded-lg bg-blue-700 px-4 py-2 text-white hover:bg-blue-900"
+          className="w-full rounded-xl bg-[#8b0000] py-3 text-white font-semibold shadow-md hover:bg-[#b22222] transition-colors"
         >
           Pay & Boost
         </button>
+
+        <div className="mt-6 text-center text-gray-500 text-sm">
+          By clicking "Pay & Boost", you agree to our <span className="underline">terms and conditions</span>.
+        </div>
       </div>
     </div>
   );

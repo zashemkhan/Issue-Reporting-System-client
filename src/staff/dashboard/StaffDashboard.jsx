@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from 'recharts';
+
 export default function StaffDashboard() {
   const axiosSecure = useAxiosSecure();
 
@@ -22,48 +23,42 @@ export default function StaffDashboard() {
     },
   });
 
-  const totalResolved = AssignedIssues.filter(
-    (issue) => issue.status === 'resolved',
-  ).length;
+  const totalResolved = AssignedIssues.filter(issue => issue.status === 'resolved').length;
 
   const todaysTasks = AssignedIssues.filter((assignment) => {
-    if (!assignment) return false;
-
-    return (
-      format(assignment.assignedAt, 'dd-MM-y') === format(new Date(), 'dd-MM-y')
-    );
+    if (!assignment || !assignment.assignedAt) return false;
+    return format(new Date(assignment.assignedAt), 'dd-MM-y') === format(new Date(), 'dd-MM-y');
   }).length;
 
   const chartData = [
-    { name: 'Total submit', count: AssignedIssues.length },
+    { name: 'Total Submit', count: AssignedIssues.length },
     { name: 'Resolved', count: totalResolved },
-    {
-      name: "Today's task",
-      count: todaysTasks,
-    },
+    { name: "Today's Task", count: todaysTasks },
   ];
 
   return (
-    <div className="px-2 md:px-3">
-      <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="grid h-40 place-content-center rounded-xl bg-slate-50 text-slate-800 shadow-sm">
-          <h4 className="text-2xl">Assigned issues count</h4>
-          <h5 className="text-center text-3xl">{AssignedIssues.length || 0}</h5>
+    <div className="px-4 md:px-6">
+      <h2 className="text-3xl font-bold text-gray-800 mb-6">Staff Dashboard</h2>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="flex flex-col items-center justify-center rounded-xl bg-blue-50 text-blue-800 p-6 shadow-md hover:shadow-lg transition">
+          <h4 className="text-xl font-semibold">Assigned Issues</h4>
+          <h5 className="text-3xl font-bold mt-2">{AssignedIssues.length || 0}</h5>
         </div>
-        <div className="grid h-40 place-content-center rounded-xl bg-green-50 text-green-700 shadow-sm">
-          <h4 className="text-2xl">Issues resolved count</h4>
-          <h5 className="text-center text-3xl">{totalResolved || 0}</h5>
+        <div className="flex flex-col items-center justify-center rounded-xl bg-green-50 text-green-700 p-6 shadow-md hover:shadow-lg transition">
+          <h4 className="text-xl font-semibold">Resolved Issues</h4>
+          <h5 className="text-3xl font-bold mt-2">{totalResolved || 0}</h5>
         </div>
-        <div  className="grid h-40 place-content-center rounded-xl bg-red-50 text-red-700 shadow-sm">
-          <h4 className="text-2xl">Today's task</h4>
-          <h5 className="text-center text-3xl">{todaysTasks}</h5>
+        <div className="flex flex-col items-center justify-center rounded-xl bg-red-50 text-red-700 p-6 shadow-md hover:shadow-lg transition">
+          <h4 className="text-xl font-semibold">Today's Tasks</h4>
+          <h5 className="text-3xl font-bold mt-2">{todaysTasks}</h5>
         </div>
       </div>
-      <div className="mt-20 h-72 w-full">
-        <ResponsiveContainer
-          width="100%"
-          height={300}
-        >
+
+      {/* Chart */}
+      <div className="mt-16 h-72 w-full">
+        <ResponsiveContainer width="100%" height={300}>
           <BarChart data={chartData}>
             <CartesianGrid strokeDasharray="5 5" />
             <XAxis dataKey="name" />
@@ -72,7 +67,7 @@ export default function StaffDashboard() {
             <Bar
               dataKey="count"
               barSize={35}
-               fill="#3B82F6" 
+              fill="#3B82F6"
               radius={[6, 6, 0, 0]}
               animationDuration={1200}
             />

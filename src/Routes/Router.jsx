@@ -34,25 +34,16 @@ import DasboardCitizen from '../Pages/DashBoard/DasboardCitizen';
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Root></Root>,
+    element: <Root />,
     children: [
-      {
-        index: true,
-        element: <Home></Home>,
-      },
-      {
-        path: '/about',
-        element: <About></About>,
-      },
-      {
-        path: '/all-issues',
-        element: <AllIssues></AllIssues>,
-      },
+      { index: true, element: <Home /> },
+      { path: '/about', element: <About /> },
+      { path: '/all-issues', element: <AllIssues /> },
       {
         path: '/viewdetails/:id',
         element: (
           <PrivateRoute>
-            <ViewDetail></ViewDetail>
+            <ViewDetail />
           </PrivateRoute>
         ),
         loader: async ({ params }) =>
@@ -62,7 +53,7 @@ export const router = createBrowserRouter([
         path: '/payment/:issueId',
         element: (
           <PrivateRoute>
-            <Payment></Payment>
+            <Payment />
           </PrivateRoute>
         ),
       },
@@ -70,7 +61,7 @@ export const router = createBrowserRouter([
         path: '/payment-success',
         element: (
           <PrivateRoute>
-            <PaymentSuccess></PaymentSuccess>
+            <PaymentSuccess />
           </PrivateRoute>
         ),
       },
@@ -78,7 +69,7 @@ export const router = createBrowserRouter([
         path: '/payment-cancel',
         element: (
           <PrivateRoute>
-            <PaymentCancell></PaymentCancell>
+            <PaymentCancell />
           </PrivateRoute>
         ),
       },
@@ -88,48 +79,14 @@ export const router = createBrowserRouter([
     path: '/',
     element: (
       <AuthProtectedRoute>
-        <AuthLayout></AuthLayout>
+        <AuthLayout />
       </AuthProtectedRoute>
     ),
     children: [
-      {
-        path: '/login',
-        element: <Login></Login>,
-      },
-      {
-        path: '/register',
-        element: <Register></Register>,
-      },
+      { path: '/login', element: <Login /> },
+      { path: '/register', element: <Register /> },
     ],
   },
-  // {
-  //   path: '/dashboard',
-  //   element: (
-  //     <PrivateRoute>
-  //       <RoleBasedRedirect requiredRole={'user'}>
-  //         <DashBoard />
-  //       </RoleBasedRedirect>
-  //     </PrivateRoute>
-  //   ),
-  //   children: [
-  //     {
-  //       path: 'my-issues-page',
-  //       element: <MyIssuesPage></MyIssuesPage>,
-  //     },
-  //     {
-  //       path: 'public-report',
-  //       element: <PublicReport></PublicReport>,
-  //     },
-  //     {
-  //       path: 'my-profile',
-  //       element: <MyProfile></MyProfile>,
-  //     },
-  //     {
-  //       index: true,
-  //       element: <DasboardCitizen></DasboardCitizen>,
-  //     },
-  //   ],
-  // },
   {
     path: '/dashboard',
     element: (
@@ -140,7 +97,7 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      { index: true, element: <DasboardCitizen /> }, // Default
+      { index: true, element: <DasboardCitizen /> }, // Default dashboard page
       { path: 'my-issues-page', element: <MyIssuesPage /> },
       { path: 'public-report', element: <PublicReport /> },
       { path: 'my-profile', element: <MyProfile /> },
@@ -156,30 +113,12 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      {
-        path: 'admindashboard',
-        element: <AdminDashboard />,
-      },
-      {
-        path: 'adminallissues',
-        element: <AdminAllIssues></AdminAllIssues>,
-      },
-      {
-        path: 'manageusers',
-        element: <AdminManageusers></AdminManageusers>,
-      },
-      {
-        path: 'managestaff',
-        element: <AdminManageStaff></AdminManageStaff>,
-      },
-      {
-        path: 'paymentspage',
-        element: <Paymentspage></Paymentspage>,
-      },
-      {
-        path: 'profile',
-        element: <AdminProfile></AdminProfile>,
-      },
+      { path: 'admindashboard', element: <AdminDashboard /> },
+      { path: 'adminallissues', element: <AdminAllIssues /> },
+      { path: 'manageusers', element: <AdminManageusers /> },
+      { path: 'managestaff', element: <AdminManageStaff /> },
+      { path: 'paymentspage', element: <Paymentspage /> },
+      { path: 'profile', element: <AdminProfile /> },
     ],
   },
   {
@@ -192,22 +131,10 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      {
-        path: 'staffdashboard',
-        element: <StaffDashboard />,
-      },
-      {
-        path: 'staffprofile',
-        element: <StaffProfile></StaffProfile>,
-      },
-      {
-        path: 'staffassignissues',
-        element: <StaffAssignedissues></StaffAssignedissues>,
-      },
+      { path: 'staffdashboard', element: <StaffDashboard /> },
+      { path: 'staffprofile', element: <StaffProfile /> },
+      { path: 'staffassignissues', element: <StaffAssignedissues /> },
     ],
   },
-  {
-    path: '*',
-    element: <Error></Error>,
-  },
+  { path: '*', element: <Error /> },
 ]);

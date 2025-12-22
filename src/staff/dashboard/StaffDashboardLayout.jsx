@@ -1,110 +1,98 @@
 import { ToastContainer } from 'kitzo/react';
 import { Link, NavLink, Outlet } from 'react-router';
-import StaffDashboard from './StaffDashboard';
 import { LayoutDashboard, UserPlus } from 'lucide-react';
 import { TbReport } from 'react-icons/tb';
 
 export default function StaffDashboardLayout() {
   return (
-      <div className="drawer lg:drawer-open">
-      <input
-        id="my-drawer-4"
-        type="checkbox"
-        className="drawer-toggle"
-      />
-      <div className="drawer-content">
+    <div className="drawer lg:drawer-open">
+      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+
+      {/* Main Content */}
+      <div className="drawer-content flex flex-col min-h-screen bg-gray-50">
         {/* Navbar */}
-        <nav className="navbar bg-base-300 w-full">
+        <nav className="navbar bg-white shadow-md w-full px-4">
           <label
             htmlFor="my-drawer-4"
+            className="btn btn-square btn-ghost lg:hidden"
             aria-label="open sidebar"
-            className="btn btn-square btn-ghost"
           >
-            {/* Sidebar toggle icon */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth="2"
               fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
               stroke="currentColor"
-              className="my-1.5 inline-block size-4"
+              className="w-6 h-6"
             >
-              <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-              <path d="M9 4v16"></path>
-              <path d="M14 10l2 2l-2 2"></path>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </label>
-          <div className="px-4">
-            <Link
-              to="/"
-              className="text-2xl font-bold text-[#1e91f4]"
-            >
-              CityFix Portal
-            </Link>
-          </div>
-        </nav>
-        {/* Page content here */}
 
-        <Outlet></Outlet>
+          <Link to="/" className="ml-2 text-2xl font-bold text-[#1e91f4]">
+            CityFix Portal
+          </Link>
+        </nav>
+
+        {/* Page Content */}
+        <div className="p-4 flex-1">
+          <Outlet />
+        </div>
       </div>
 
-      <div className="drawer-side is-drawer-close:overflow-visible">
-        <label
-          htmlFor="my-drawer-4"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-        ></label>
-        <div className="bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64 flex min-h-full flex-col items-start">
-          {/* Sidebar content here */}
-          <ul className="menu w-full grow">
-            {/* List item */}
-
-            <NavLink to="/staff/dashboard/staffdashboard">
-            
-              <li>
-                <button
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="staff-dashboard"
-                >
-                  {/* dashboard */}
-
-                    <LayoutDashboard />
-                  <span className="is-drawer-close:hidden">DashBoard</span>
-                </button>
-              </li>
-            </NavLink>
-           
-
-
-
+      {/* Sidebar */}
+      <div className="drawer-side">
+        <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
+        <div className="bg-white w-64 min-h-full flex flex-col shadow-lg">
+          <ul className="menu p-4 w-full grow">
+            {/* Dashboard */}
             <li>
-              {/* Assigned issues page */}
               <NavLink
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="staff-assign-issues"
-                to="/staff/dashboard/staffassignissues"
+                to="/staff/dashboard/staffdashboard"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-3 rounded-md ${
+                    isActive ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
+                  }`
+                }
               >
-               
-                 <TbReport size={24} />
-                <span className="is-drawer-close:hidden">Assigned issues page</span>
+                <LayoutDashboard size={24} />
+                <span>Dashboard</span>
               </NavLink>
             </li>
+
+            {/* Assigned Issues */}
             <li>
-              {/* profile */}
               <NavLink
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="my-profile"
+                to="/staff/dashboard/staffassignissues"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-3 rounded-md ${
+                    isActive ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
+                  }`
+                }
+              >
+                <TbReport size={24} />
+                <span>Assigned Issues</span>
+              </NavLink>
+            </li>
+
+            {/* Profile */}
+            <li>
+              <NavLink
                 to="/staff/dashboard/staffprofile"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-3 rounded-md ${
+                    isActive ? 'bg-blue-100 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
+                  }`
+                }
               >
                 <UserPlus size={24} />
-                <span className="is-drawer-close:hidden">My profile</span>
+                <span>My Profile</span>
               </NavLink>
             </li>
           </ul>
         </div>
       </div>
+
       <ToastContainer position="top-right" />
     </div>
   );

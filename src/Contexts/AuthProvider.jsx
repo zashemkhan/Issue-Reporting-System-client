@@ -74,14 +74,8 @@ const AuthProvider = ({ children }) => {
       if (userCreating) return;
 
       if (currentUser) {
-        try {
-          const { data } = await axiosSecure.get('/user/user-profile');
-          setUser(data);
-        } catch (err) {
-          console.error(err);
-        } finally {
-          setLoading(false);
-        }
+       
+        setUser(currentUser);
       } else {
         setUser(null);
       }

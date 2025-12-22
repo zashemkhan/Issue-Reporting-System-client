@@ -12,9 +12,7 @@ const MyProfile = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
   const [isUpdating, setIsUpdating] = useState(false);
-
   const axiosSecure = useAxiosSecure();
 
   const handleUpdate = async (data) => {
@@ -36,7 +34,7 @@ const MyProfile = () => {
       });
 
       setUser(response.data);
-      toast.success('Profile successfully upated');
+      toast.success('Profile successfully updated');
     } catch (err) {
       console.error(err);
     } finally {
@@ -45,71 +43,68 @@ const MyProfile = () => {
   };
 
   return (
-    <div className=" mt-20 flex max-w-4xl flex-col gap-10 rounded-xl bg-white p-8  md:flex-row md:p-10">
-      {/* Profile Section */}
-      <div className="flex flex-col items-center gap-4 md:items-start">
-        <img
-          className="h-40 w-40 rounded-full border border-[#c9c9c9] object-cover"
-          src={user.photoURL}
-          alt="Profile"
-        />
-        <h5 className="text-2xl font-bold text-gray-800">{user.displayName}</h5>
-        <p className="font-medium text-gray-500">{user.email}</p>
-      </div>
-
-      {/* Update Form */}
-      <form
-        onSubmit={handleSubmit(handleUpdate)}
-        className="flex flex-1 flex-col gap-6"
-      >
-        {/* Name Field */}
-        <div className="flex flex-col">
-          <label className="mb-2 font-semibold text-gray-400">Name</label>
-          <input
-            type="text"
-            placeholder="Name"
-            defaultValue={user.displayName}
-            {...register('name', { required: true })}
-            className="rounded-md border border-[#c9c9c9] px-2 py-2 transition focus:border-[#c9c9c9] focus:ring-2 focus:ring-[#c9c9c9] focus:outline-none"
+    <section className="bg-gray-50 min-h-screen py-12 px-4">
+      <div className="mx-auto flex max-w-4xl flex-col gap-10 rounded-2xl bg-white p-8 shadow-md md:flex-row md:p-10">
+        {/* Profile Section */}
+        <div className="flex flex-col items-center gap-4 md:items-start">
+          <img
+            className="h-40 w-40 rounded-full border border-[#8b0000] object-cover"
+            src={user.photoURL}
+            alt="Profile"
           />
+          <h2 className="text-2xl font-bold text-[#8b0000]">{user.displayName}</h2>
+          <p className="font-medium text-gray-500">{user.email}</p>
         </div>
 
-        {/* Photo Field */}
-        <div className="flex flex-col">
-          <label className="mb-2 font-semibold text-gray-400">Photo</label>
-          <input
-            type="file"
-            {...register('photo', { required: true })}
-            className="file-input w-full rounded-md border border-[#c9c9c9] transition focus:border-[#c9c9c9] focus:ring-2 focus:ring-[#c9c9c9] focus:outline-none"
-          />
-        </div>
-
-        {/* Update Button */}
-        {/* <button
-          type="submit"
-          className="btn flex w-fit items-center justify-center gap-2 rounded-md bg-[#25408f] px-6 py-2 font-semibold text-white"
+        {/* Update Form */}
+        <form
+          onSubmit={handleSubmit(handleUpdate)}
+          className="flex flex-1 flex-col gap-6"
         >
-          {isUpdating ? (
-            <span className="loading loading-spinner loading-xs"></span>
-          ) : (
-            <span>Update</span>
-          )}
-        </button> */}
-
-        {!user.isblock && (
-          <button
-            type="submit"
-            className="btn flex w-fit items-center justify-center gap-2 rounded-md bg-[#25408f] px-6 py-2 font-semibold text-white"
-          >
-            {isUpdating ? (
-              <span className="loading loading-spinner loading-xs"></span>
-            ) : (
-              <span>Update</span>
+          {/* Name Field */}
+          <div className="flex flex-col">
+            <label className="mb-2 font-semibold text-gray-600">Name</label>
+            <input
+              type="text"
+              placeholder="Name"
+              defaultValue={user.displayName}
+              {...register('name', { required: true })}
+              className={`rounded-lg border border-gray-300 px-3 py-2 shadow-sm outline-none focus:ring-2 focus:ring-[#8b0000]`}
+            />
+            {errors.name && (
+              <p className="text-red-600 text-sm mt-1">Name is required</p>
             )}
-          </button>
-        )}
-      </form>
-    </div>
+          </div>
+
+          {/* Photo Field */}
+          <div className="flex flex-col">
+            <label className="mb-2 font-semibold text-gray-600">Photo</label>
+            <input
+              type="file"
+              {...register('photo', { required: true })}
+              className="file-input w-full rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-[#8b0000]"
+            />
+            {errors.photo && (
+              <p className="text-red-600 text-sm mt-1">Photo is required</p>
+            )}
+          </div>
+
+          {/* Update Button */}
+          {!user.isblock && (
+            <button
+              type="submit"
+              className="w-fit rounded-lg bg-[#8b0000] px-6 py-2 font-semibold text-white shadow-md transition hover:bg-[#b22222]"
+            >
+              {isUpdating ? (
+                <span className="loading loading-spinner loading-xs"></span>
+              ) : (
+                'Update'
+              )}
+            </button>
+          )}
+        </form>
+      </div>
+    </section>
   );
 };
 

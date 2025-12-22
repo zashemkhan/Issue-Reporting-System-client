@@ -6,8 +6,9 @@ import IssueCard from '../../../components/IssueCard';
 
 const MyIssuesPage = () => {
   const { user } = useAuth();
-  const [isCategory, isSetcategory] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('');
   const axiosSecure = useAxiosSecure();
+
   const { data: myIssues = [] } = useQuery({
     queryKey: ['my-issues', user?.email],
     queryFn: async () => {
@@ -16,34 +17,47 @@ const MyIssuesPage = () => {
     },
   });
 
- const filterIssue =  myIssues.filter(c => {
-   return isCategory === '' ? true : c.category.toLowerCase() == isCategory.toLowerCase()
-  })
-  // console.log(myIssues)
+  const filteredIssues = myIssues.filter((issue) =>
+    selectedCategory === '' ? true : issue.category.toLowerCase() === selectedCategory.toLowerCase()
+  );
+
   return (
-    <div className="mx-20">
-      <h3 className="py-6 text-4xl font-bold">
-        My Issues Page: {myIssues.length}
-      </h3>
-      <select
-       onChange={(e) => isSetcategory(e.target.value)}
-       className="rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-gray-400 focus:outline-none mb-5">
-        <option value="">all category</option>
-        <option value="Broken Streetlights">Broken Streetlights</option>
-        <option value="Potholes">Potholes</option>
-        <option value="Water Leakage">Water Leakage</option>
-        <option value="Garbage Overflow">Garbage Overflow</option>
-        <option value="Damaged Footpaths">Damaged Footpaths</option>
-      </select>
-      <div className="grid grid-cols-1 gap-10 max-md:mx-4 md:grid-cols-2 lg:grid-cols-3">
-        {filterIssue.map((issue) => (
-          <IssueCard
-            key={issue._id}
-            issue={issue}
-          ></IssueCard>
-        ))}
+    <section className="bg-gray-50 min-h-screen py-12 px-4">
+      <div className="mx-auto max-w-[1400px]">
+        <h2 className="text-4xl font-extrabold text-[#8b0000] mb-6">
+          My Issues ({myIssues.length})
+        </h2>
+
+        {/* Category Filter */}
+        <div className="mb-8">
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="w-full sm:w-1/3 rounded-xl border border-gray-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-[#8b0000] focus:outline-none"
+          >
+            <option value="">All Categories</option>
+            <option value="Broken Streetlights">Broken Streetlights</option>
+            <option value="Potholes">Potholes</option>
+            <option value="Water Leakage">Water Leakage</option>
+            <option value="Garbage Overflow">Garbage Overflow</option>
+            <option value="Damaged Footpaths">Damaged Footpaths</option>
+          </select>
+        </div>
+
+        {/* Issues Grid */}
+        {filteredIssues.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-20">
+            <p className="text-3xl font-bold text-gray-500">No Issues Found</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredIssues.map((issue) => (
+              <IssueCard key={issue._id} issue={issue} />
+            ))}
+          </div>
+        )}
       </div>
-    </div>
+    </section>
   );
 };
 
