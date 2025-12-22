@@ -3,9 +3,11 @@ export default function Logo({ onClick = () => {} }) {
     <div className="flex items-center gap-2">
       <button
         onClick={onClick}
-        className="text-2xl font-bold text-[#1e91f4]"
+        className="text-2xl font-extrabold bg-clip-text text-transparent 
+                   bg-gradient-to-r from-blue-500 via-cyan-400 to-green-400 
+                   hover:scale-105 transition-transform duration-300"
       >
-        CityFix Portal
+        IssueRPT
       </button>
     </div>
   );
