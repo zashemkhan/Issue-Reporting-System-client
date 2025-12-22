@@ -5,52 +5,70 @@ import Logo from './Logo';
 
 const Footer = () => {
   return (
-    <div className="bg-[#edf2ff] py-10">
-      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 max-lg:mx-4 md:grid-cols-2 lg:grid-cols-3">
+    <footer className="bg-[#fdf0f0] text-gray-800">
+      <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Logo & Info */}
         <div className="flex flex-col gap-4">
-          <Logo onClick={() => console.log('clicked on footer logo')} />
-
-          <div>
-            <h2 className="font-bold">Address</h2>
-            <p>Bogura, Sherpur Bus stand, Bangladesh</p>
+          <Logo onClick={() => console.log('Clicked Footer Logo')} />
+          <p className="mt-2 text-gray-600">
+            Your one-stop platform to report and track city issues efficiently.
+          </p>
+          <div className="space-y-2">
+            <h3 className="font-bold text-[#8b0000]">Address</h3>
+            <p>Bogura, Sherpur Bus Stand, Bangladesh</p>
           </div>
-          <div>
-            <h2 className="font-bold">Contact</h2>
-            <p>01734837341</p>
-            <p>sakib43@gmail.com</p>
+          <div className="space-y-1">
+            <h3 className="font-bold text-[#8b0000]">Contact</h3>
+            <p>Phone: 0099 4488 99</p>
+            <p>Email: issuerpt29@gmail.com</p>
           </div>
         </div>
-        <div>
-          <ul className="flex flex-col gap-4 text-gray-700">
-            <NavLink to="/">
-              <li>Home</li>
-            </NavLink>
 
-            <NavLink to="/allissues">
-              <li>All Issues</li>
-            </NavLink>
-            <NavLink to="/about">
-              <li>About</li>
-            </NavLink>
-          </ul>
+        {/* Navigation Links */}
+        <div className="flex flex-col gap-2">
+          <h3 className="mb-3 font-bold text-[#8b0000]">Quick Links</h3>
+          <NavLink
+            to="/"
+            className="transition hover:text-[#b22222]"
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/allissues"
+            className="transition hover:text-[#b22222]"
+          >
+            All Issues
+          </NavLink>
+          <NavLink
+            to="/about"
+            className="transition hover:text-[#b22222]"
+          >
+            About
+          </NavLink>
         </div>
-        <div className="flex gap-3">
-          <a href="#">
-            <Facebook />
-          </a>
-          <a href="#">
-            <Instagram />
-          </a>
-          <a href="#">
-            <Linkedin />
-          </a>
+
+        {/* Social Media */}
+        <div className="flex flex-col gap-3">
+          <h3 className="mb-3 font-bold text-[#8b0000]">Follow Us</h3>
+          <div className="flex gap-4">
+         <a href="https://www.facebook.com/yourpage" target="_blank" rel="noopener noreferrer" className="transition hover:text-[#b22222]">
+              <Facebook size={24} />
+            </a>
+            <a href="https://www.instagram.com/yourprofile" target="_blank" rel="noopener noreferrer" className="transition hover:text-[#b22222]">
+              <Instagram size={24} />
+            </a>
+            <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" className="transition hover:text-[#b22222]">
+              <Linkedin size={24} />
+            </a>
+          </div>
         </div>
       </div>
-      <div className="mx-auto mt-7 flex max-w-[1400px] justify-between rounded-md bg-[#e7edfc] p-6 shadow max-lg:mx-4 max-md:flex-col">
-        <p>© 2025 CityFix portal & Solutions. All Right Reserved.</p>
-        <p>Privacy Policy Terms & Conditions</p>
+
+      <div className="mt-10 border-t border-gray-300 py-4 text-center text-sm text-gray-600">
+        © 2025 IssueRPT Portal & Solutions. All Rights Reserved. | Privacy Policy
+        | Terms & Conditions
       </div>
-    </div>
+    </footer>
   );
 };
 

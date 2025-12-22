@@ -14,6 +14,8 @@ const AllIssues = () => {
   const limit = 5;
 const [debouncedSearch, setDebouncedSearch] = useState('');
 
+
+
   useEffect(() => {
   const timer = setTimeout(() => {
     setDebouncedSearch(searchText);
@@ -121,7 +123,8 @@ const [debouncedSearch, setDebouncedSearch] = useState('');
               prev
             </button>
           )}
-          {[...Array(totalpage).keys()].map((i, s) => (
+          {totalpage > 0 &&
+          [...Array(totalpage).keys()].map((i, s) => (
             <button
               key={s}
               onClick={() => setCurrentpage(i)}

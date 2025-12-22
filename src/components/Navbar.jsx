@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { LogOut, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { NavLink, useLocation, useNavigate } from 'react-router';
+import { CiUser } from 'react-icons/ci';
 import useAuth from '../Hooks/useAuth';
 import Logo from './Logo';
 import { signOut } from 'firebase/auth';
@@ -36,9 +37,8 @@ const Navbar = () => {
     };
   }, []);
 
-  // Safe Dashboard path
   const getDashboardPath = () => {
-    if (!user || !user.role) return '/dashboard/dashboardcitizen'; // fallback
+    if (!user || !user.role) return '/dashboard/dashboardcitizen';
     switch (user.role) {
       case 'admin':
         return '/admin/dashboard/admindashboard';
@@ -54,7 +54,7 @@ const Navbar = () => {
       <NavLink
         to="/"
         className={({ isActive }) =>
-          ` ${isActive ? 'text-[#1e91f4]' : ''} rounded-md px-5 py-1.5 font-medium hover:bg-[#e7e7e8]`
+          ` ${isActive ? 'text-[#8b0000]' : ''} rounded-md px-5 py-1.5 font-medium hover:bg-[#fceaea]`
         }
       >
         <li>Home</li>
@@ -63,7 +63,7 @@ const Navbar = () => {
       <NavLink
         to="/all-issues"
         className={({ isActive }) =>
-          ` ${isActive ? 'text-[#1e91f4]' : ''} rounded-md px-5 py-1.5 font-medium hover:bg-[#e7e7e8]`
+          ` ${isActive ? 'text-[#8b0000]' : ''} rounded-md px-5 py-1.5 font-medium hover:bg-[#fceaea]`
         }
       >
         <li>All Issues</li>
@@ -72,7 +72,7 @@ const Navbar = () => {
       <NavLink
         to="/about"
         className={({ isActive }) =>
-          ` ${isActive ? 'text-[#1e91f4]' : ''} rounded-md px-5 py-1.5 font-medium hover:bg-[#e7e7e8]`
+          ` ${isActive ? 'text-[#8b0000]' : ''} rounded-md px-5 py-1.5 font-medium hover:bg-[#fceaea]`
         }
       >
         <li>About</li>
@@ -82,13 +82,17 @@ const Navbar = () => {
         <div className="relative">
           <div
             onClick={() => setOpenimg(!openimg)}
-            className="dropdown-open-btn h-10 w-10 rounded-full cursor-pointer"
+            className="dropdown-open-btn h-10 w-10 rounded-full cursor-pointer flex items-center justify-center bg-gray-200"
           >
-            <img
-              className="rounded-full"
-              src={user.photoURL || '/default-user.png'}
-              alt={user.displayName || 'User'}
-            />
+            {user.photoURL ? (
+              <img
+                className="rounded-full border h-10 w-10"
+                src={user.photoURL}
+                alt={user.displayName || 'User'}
+              />
+            ) : (
+              <CiUser className="text-2xl text-[#8b0000]" />
+            )}
           </div>
 
           {openimg && (
@@ -98,7 +102,7 @@ const Navbar = () => {
               <NavLink
                 to={getDashboardPath()}
                 className={({ isActive }) =>
-                  ` ${isActive ? 'text-[#1e91f4]' : ''} rounded-md px-5 py-1.5 font-medium hover:bg-[#e7e7e8]`
+                  ` ${isActive ? 'text-[#8b0000]' : ''} rounded-md px-5 py-1.5 font-medium hover:bg-[#fceaea]`
                 }
               >
                 <li>Dashboard</li>
@@ -106,7 +110,7 @@ const Navbar = () => {
 
               <button
                 onClick={handleLogout}
-                className="btn w-full rounded-md bg-[#25408f] font-semibold text-white hover:bg-[#1a2d6e]"
+                className="btn w-full rounded-md bg-[#8b0000] font-semibold text-white hover:bg-[#b22222]"
               >
                 Log Out
               </button>
@@ -116,7 +120,7 @@ const Navbar = () => {
       ) : (
         <NavLink to="/login">
           <li>
-            <button className="btn rounded-md bg-[#25408f] font-semibold text-white outline-none hover:bg-[#1a2d6e]">
+            <button className="btn rounded-md bg-[#8b0000] font-semibold text-white outline-none hover:bg-[#b22222]">
               Login
             </button>
           </li>

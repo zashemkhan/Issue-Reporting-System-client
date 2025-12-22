@@ -12,35 +12,38 @@ const StayUpdated = () => {
   const handleSubscribe = (data) => {
     toast.success('Successfully Subscribed');
   };
-  return (
-    <div className="space-y-3">
-      <h3 className="text-center text-4xl font-bold">Stay Updated</h3>
-      <p className="text-center">
-        Subscribe to our newsletter to get updates on new features, city
-        partnerships, and success stories.
-      </p>
-      <form
-        onSubmit={handleSubmit(handleSubscribe)}
-        className="mx-auto flex max-w-[700px] items-center gap-2 max-md:mx-3"
-      >
-        <input
-          type="email"
-          {...register('email', { required: true })}
-          placeholder="Email"
-          className="max-w-[600px] flex-1 rounded-md border border-[#c9c9c9] px-2 py-2 transition focus:border-[#c9c9c9] focus:ring-2 focus:ring-[#c9c9c9] focus:outline-none"
-        />
-        <button
-          type="submit"
-          className="btn bg-[#25408f] text-white"
-        >
-          Subscribe
-        </button>
-      </form>
 
-      <p className="text-center">
-        We respect your privacy. Unsubscribe at any time.
-      </p>
-    </div>
+  return (
+    <section className="bg-gradient-to-r from-[#fff0f0] to-[#fff5f5] py-16">
+      <div className="mx-auto max-w-[800px] px-4 text-center space-y-6">
+        <h3 className="text-2xl font-extrabold text-gray-800 md:text-3xl">Stay Updated</h3>
+        <p className="text-gray-600 text-lg">
+          Subscribe to our newsletter to get updates on new features, city partnerships, and success stories.
+        </p>
+
+        <form
+          onSubmit={handleSubmit(handleSubscribe)}
+          className="flex flex-col items-center gap-4 sm:flex-row"
+        >
+          <input
+            type="email"
+            {...register('email', { required: true })}
+            placeholder="Enter your email"
+            className="flex-1 rounded-lg border border-[#8b0000] px-4 py-3 text-gray-700 placeholder-gray-400 shadow-sm transition focus:border-[#8b0000] focus:ring-2 focus:ring-[#8b0000] focus:outline-none"
+          />
+          <button
+            type="submit"
+            className="rounded-lg bg-[#8b0000] px-6 py-3 text-white font-semibold shadow-md transition hover:bg-[#b22222]"
+          >
+            Subscribe
+          </button>
+        </form>
+
+        <p className="text-gray-500 text-sm">
+          We respect your privacy. Unsubscribe at any time.
+        </p>
+      </div>
+    </section>
   );
 };
 

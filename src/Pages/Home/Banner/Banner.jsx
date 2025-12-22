@@ -21,10 +21,10 @@ const Banner = () => {
             Broken Streetlights
           </h3>
           <p className="mb-4 text-center text-2xl">
-            Streetlights not working? Report them now.'
+            Streetlights not working? Report them now
           </p>
           <Link to={user?.role === 'user' ? '/dashboard/public-report' : '/'}>
-            <button className="rounded-lg bg-[#25408f] px-4 py-2 text-white transition hover:bg-blue-700">
+             <button className="rounded-lg bg-[#8b0000] px-4 py-2 text-white transition hover:bg-[#b22222]">
               Apply Now
             </button>
           </Link>
@@ -37,10 +37,10 @@ const Banner = () => {
             Garbage Overflow
           </h3>
           <p className="mb-4 text-center text-2xl">
-            Overflowing garbage in public areas? Let us know.
+            Overflowing garbage in public areas? Let us know
           </p>
           <Link to={user?.role === 'user' ? '/dashboard/public-report' : '/'}>
-            <button className="rounded-lg bg-[#25408f] px-4 py-2 text-white transition hover:bg-blue-700">
+           <button className="rounded-lg bg-[#8b0000] px-4 py-2 text-white transition hover:bg-[#b22222]">
               Apply Now
             </button>
           </Link>
@@ -53,10 +53,10 @@ const Banner = () => {
             Damaged Footpaths
           </h3>
           <p className="mb-4 text-center text-2xl">
-            Cracked or broken footpaths? Report it now.
+            Cracked or broken footpaths? Report it now
           </p>
           <Link to={user?.role === 'user' ? '/dashboard/public-report' : '/'}>
-            <button className="rounded-lg bg-[#25408f] px-4 py-2 text-white transition hover:bg-blue-700">
+          <button className="rounded-lg bg-[#8b0000] px-4 py-2 text-white transition hover:bg-[#b22222]">
               Apply Now
             </button>
           </Link>
@@ -72,7 +72,7 @@ const Banner = () => {
             Report water leaks to prevent damage and waste
           </p>
           <Link to={user?.role === 'user' ? '/dashboard/public-report' : '/'}>
-            <button className="rounded-lg bg-[#25408f] px-4 py-2 text-white transition hover:bg-blue-700">
+            <button className="rounded-lg bg-[#8b0000] px-4 py-2 text-white transition hover:bg-[#b22222]">
               Apply Now
             </button>
           </Link>

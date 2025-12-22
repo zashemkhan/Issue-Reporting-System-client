@@ -4,63 +4,56 @@ import { BiLike } from 'react-icons/bi';
 import { IoIosSettings } from 'react-icons/io';
 
 const KeyFeatures = () => {
+  const features = [
+    {
+      icon: <FaUser className="text-3xl text-[#ff7f50]" />,
+      title: 'User Dashboards',
+      desc: 'Track your reports, view their status, and receive notifications when updates are available.',
+    },
+    {
+      icon: <BiLike className="text-3xl text-[#34d399]" />,
+      title: 'Upvote System',
+      desc: 'Prioritize issues based on community votes to ensure the most important problems get fixed first.',
+    },
+    {
+      icon: <IoIosSettings className="text-3xl text-[#a78bfa]" />,
+      title: 'Admin Panel',
+      desc: 'Powerful tools for admins to manage reports, assign tasks, and monitor resolution progress.',
+    },
+  ];
+
   return (
-    <div className="bg-[#e2e8fe] p-7">
-      <div className="mx-auto max-w-[1400px]">
-        <div className="mb-6 text-center">
-          <h1 className="text-4xl font-bold">Key Features</h1>
-          <span></span>
+    <section className="bg-gradient-to-r from-[#f0f4ff] to-[#ffffff] py-16">
+      <div className="mx-auto max-w-[1400px] px-4">
+        <div className="mb-12 text-center">
+          <h1 className="text-2xl font-extrabold text-gray-800 md:text-3xl">
+            Key Features
+          </h1>
+          <p className="mt-2 text-gray-500 text-lg md:text-xl">
+            Everything you need to manage public reports efficiently
+          </p>
         </div>
 
-        {/* user system  */}
-        <div className="mx-auto flex w-fit flex-col gap-5 rounded-md bg-white p-4 shadow transition-all duration-300 hover:-translate-y-2 hover:shadow-lg md:flex-row">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#f4e6fb] md:h-10 md:w-10">
-            <FaUser className="text-xl text-orange-500 md:text-lg" />
-          </div>
-          <div className="text-center md:text-left">
-            <h3 className="rounded-md text-2xl font-medium md:text-3xl">
-              User Dashboards
-            </h3>
-            <p className="text-sm md:text-base">
-              Track your reports, view their status, and receive notifications
-              when updates are available.
-            </p>
-          </div>
-        </div>
-
-        <div className='flex gap-10 max-md:flex-col my-10'>
-          {/* Upvote System */}
-          <div className="mx-auto flex w-full flex-col items-center gap-5 rounded-md bg-white p-4 shadow transition-all duration-300 hover:-translate-y-2 hover:shadow-lg md:w-fit md:flex-row md:items-start">
-            <div className="flex h-10 w-12 items-center justify-center rounded-full bg-[#f4e6fb] md:h-10 md:w-10">
-              <BiLike className="text-2xl text-green-500 md:text-xl" />
-            </div>
-            <div className="text-center md:text-left">
-              <h3 className="text-2xl font-medium md:text-3xl">
-                Upvote System
+        <div className="grid gap-10 md:grid-cols-3">
+          {features.map((feature, idx) => (
+            <div
+              key={idx}
+              className="group relative flex flex-col items-center gap-4 rounded-2xl bg-white p-8 shadow-lg transition-transform duration-300 hover:-translate-y-3 hover:shadow-2xl"
+            >
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#fff0f5] to-[#ffe4e1] transition-all group-hover:scale-110">
+                {feature.icon}
+              </div>
+              <h3 className="text-2xl font-semibold text-gray-800 text-center">
+                {feature.title}
               </h3>
-              <p className="text-sm md:text-base">
-                Prioritize issues based on community votes to ensure the most
-                important problems get fixed first.
+              <p className="text-gray-500 text-center text-sm md:text-base">
+                {feature.desc}
               </p>
             </div>
-          </div>
-
-          {/* Admin Panel */}
-          <div className="mx-auto flex w-full flex-col items-center gap-5 rounded-md bg-white p-4 shadow transition-all duration-300 hover:-translate-y-2 hover:shadow-lg md:w-fit md:flex-row md:items-start">
-            <div className="flex h-10 w-12 items-center justify-center rounded-full bg-[#f4e6fb] md:h-10 md:w-10">
-              <IoIosSettings className="text-2xl text-violet-500 md:text-xl" />
-            </div>
-            <div className="text-center md:text-left">
-              <h3 className="text-2xl font-medium md:text-3xl">Admin Panel</h3>
-              <p className="text-sm md:text-base">
-                Powerful tools for admins to manage reports, assign tasks, and
-                monitor resolution progress.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

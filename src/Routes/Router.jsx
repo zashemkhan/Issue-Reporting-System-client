@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
         element: <About></About>,
       },
       {
-        path: '/allissues',
+        path: '/all-issues',
         element: <AllIssues></AllIssues>,
       },
       {
@@ -78,10 +78,10 @@ export const router = createBrowserRouter([
         path: '/payment-cancel',
         element: (
           <PrivateRoute>
-          <PaymentCancell></PaymentCancell>
+            <PaymentCancell></PaymentCancell>
           </PrivateRoute>
         ),
-      }
+      },
     ],
   },
   {
@@ -102,8 +102,36 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  // {
+  //   path: '/dashboard',
+  //   element: (
+  //     <PrivateRoute>
+  //       <RoleBasedRedirect requiredRole={'user'}>
+  //         <DashBoard />
+  //       </RoleBasedRedirect>
+  //     </PrivateRoute>
+  //   ),
+  //   children: [
+  //     {
+  //       path: 'my-issues-page',
+  //       element: <MyIssuesPage></MyIssuesPage>,
+  //     },
+  //     {
+  //       path: 'public-report',
+  //       element: <PublicReport></PublicReport>,
+  //     },
+  //     {
+  //       path: 'my-profile',
+  //       element: <MyProfile></MyProfile>,
+  //     },
+  //     {
+  //       index: true,
+  //       element: <DasboardCitizen></DasboardCitizen>,
+  //     },
+  //   ],
+  // },
   {
-    path: 'dashboard',
+    path: '/dashboard',
     element: (
       <PrivateRoute>
         <RoleBasedRedirect requiredRole={'user'}>
@@ -112,22 +140,10 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      {
-        path: 'my-issues-page',
-        element: <MyIssuesPage></MyIssuesPage>,
-      },
-      {
-        path: 'public-report',
-        element: <PublicReport></PublicReport>,
-      },
-      {
-        path: 'my-profile',
-        element: <MyProfile></MyProfile>,
-      },
-      {
-        path:'dashboardcitizen',
-        element:<DasboardCitizen></DasboardCitizen>
-      }
+      { index: true, element: <DasboardCitizen /> }, // Default
+      { path: 'my-issues-page', element: <MyIssuesPage /> },
+      { path: 'public-report', element: <PublicReport /> },
+      { path: 'my-profile', element: <MyProfile /> },
     ],
   },
   {

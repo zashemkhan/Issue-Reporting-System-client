@@ -3,9 +3,7 @@ export default function Logo({ onClick = () => {} }) {
     <div className="flex items-center gap-2">
       <button
         onClick={onClick}
-        className="text-2xl font-extrabold bg-clip-text text-transparent 
-                   bg-gradient-to-r from-blue-500 via-cyan-400 to-green-400 
-                   hover:scale-105 transition-transform duration-300"
+        className="text-2xl font-bold text-[#8b0000] hover:text-[#b22222] transition-colors duration-300"
       >
         IssueRPT
       </button>
