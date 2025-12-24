@@ -1,6 +1,7 @@
 import React from 'react';
 import useAuth from '../../../Hooks/useAuth';
 import { useLocation, useNavigate } from 'react-router';
+import { toast } from 'kitzo/react';
 
 const SocialLogin = () => {
   const { signInGoogle } = useAuth();
@@ -10,23 +11,24 @@ const SocialLogin = () => {
   const handleGoogleLogin = () => {
     signInGoogle()
       .then(() => {
+        toast.success('Login successful!');
         navigate(location?.state || '/');
       })
       .catch((error) => {
+        toast.error('Login failed!');
         console.log(error);
       });
   };
+
   return (
     <div>
       <button
         onClick={handleGoogleLogin}
-        className="btn w-full border-[#e5e5e5] bg-white text-black"
+        className="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white py-2 text-black transition hover:shadow-md"
       >
         <svg
+          className="h-5 w-5"
           aria-label="Google logo"
-          width="16"
-          height="16"
-          xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"
         >
           <g>

@@ -1,100 +1,101 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import useAxiosSecure from '../../../Hooks/useAxiosSecure';
-import axios from 'axios';
-import { format } from 'date-fns';
-import { toast, ToastContainer } from 'kitzo/react';
-import useAuth from '../../../Hooks/useAuth';
-import { useNavigate } from 'react-router';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import axios from "axios";
+import { format } from "date-fns";
+import { toast, ToastContainer } from "kitzo/react";
+import useAuth from "../../../Hooks/useAuth";
+import { useNavigate } from "react-router";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const PublicReport = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
   const queryClient = useQueryClient();
-  const { data: myIssues = [], isLoading: isMyIssueLoading, refetch } = useQuery({
-    queryKey: ['my-issues', user?.email],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/my-issues/${user?.email}`);
-      return res.data;
-    },
-  });
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
+
+  // Get user's issues count
+  const { data: myIssues = [], isLoading } = useQuery({
+    queryKey: ["my-issues", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      if(!user?.email) return [];
+      const res = await axiosSecure.get(`/issues/my-issues/${user.email}`);
+      return res.data || [];
+    },
+  });
 
   const handleForm = async (data) => {
     if (loading) return;
     setLoading(true);
 
-    const uploadPhoto = data.photo[0];
-    const formData = new FormData();
-    formData.append('image', uploadPhoto);
-    const img_api_url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMG_HOST_IMGBB}`;
-    const imgResponse = await axios.post(img_api_url, formData);
-    const uploadedImageUrl = imgResponse.data.data.url;
-
-    const issueData = {
-      title: data.title,
-      category: data.category,
-      description: data.description,
-      location: data.location,
-      priority: 'normal',
-      status: 'pending',
-      image: uploadedImageUrl,
-      upvotes: 0,
-      date: format(new Date(), 'MM/dd/yyyy, hh:mm a'),
-      createdBy: user.uid,
-      upvotedBy: [],
-      boostPrice: 100,
-      isAssigned: false,
-    };
-
-    axiosSecure.post('/issues', issueData).then(() => {
-      toast.success('Issue submitted successfully!');
-      queryClient.invalidateQueries(['my-issues', user?.email]);
-      setLoading(false);
-      reset();
-      navigate('/dashboard/my-issues-page');
-    });
-  };
-
-  const Subscribebutton = async () => {
     try {
-      await axiosSecure.patch(`/users/subscribe/${user.email}`);
-      toast.success('Subscription successful!');
-      navigate('/dashboard/my-profile');
-      refetch();
-    } catch (error) {
-      toast.error('Subscription failed');
+      const formData = new FormData();
+      formData.append("image", data.photo[0]);
+
+      const img_api_url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMG_HOST_IMGBB}`;
+      const imgRes = await axios.post(img_api_url, formData);
+      const imageUrl = imgRes.data.data.url;
+
+      const issueData = {
+        title: data.title,
+        category: data.category,
+        description: data.description,
+        location: data.location,
+        image: imageUrl,
+        date: format(new Date(), "MM/dd/yyyy, hh:mm a"),
+      };
+
+      await axiosSecure.post("/issues", issueData);
+
+      toast.success("Issue submitted successfully!");
+      queryClient.invalidateQueries(["my-issues", user.email]);
+      reset();
+      navigate("/dashboard/my-issues-page");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to submit issue");
+    } finally {
+      setLoading(false);
     }
   };
+
+  const handleSubscribe = async () => {
+    try {
+      await axiosSecure.patch(`/users/subscribe/${user.email}`);
+      toast.success("Subscription successful!");
+      navigate("/dashboard/my-profile");
+    } catch {
+      toast.error("Subscription failed");
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <span className="loading loading-spinner loading-xl"></span>
+      </div>
+    );
+  }
 
   return (
     <>
       <ToastContainer />
-      {user.isblock ? (
+      {user?.isBlocked ? (
         <div className="flex min-h-screen items-center justify-center">
           <h4 className="text-2xl font-bold text-red-600">
             Your account has been blocked
           </h4>
         </div>
-      ) : isMyIssueLoading ? (
-        <div className="flex min-h-screen items-center justify-center">
-          <span className="loading loading-spinner loading-xl"></span>
-        </div>
-      ) : myIssues.length >= 3 && !user.isSubscribed ? (
-        <div className="mx-auto max-w-lg space-y-4 rounded-lg bg-white p-6 shadow-md">
+      ) : myIssues.length >= 3 && !user?.isSubscribed ? (
+        <div className="mx-auto mt-20 max-w-lg rounded-lg bg-white p-6 shadow-md">
           <h3 className="text-2xl font-bold text-[#8b0000]">Limit Reached</h3>
-          <p className="text-gray-600">
-            You have reached your issue submission limit. To continue submitting new
-            issues, you need to become a paid member.
-          </p>
+          <p className="mt-2 text-gray-600">Free users can submit only 3 issues.</p>
           <button
-            className="w-full rounded-lg bg-[#8b0000] py-2 font-semibold text-white shadow-md transition hover:bg-[#b22222]"
-            onClick={Subscribebutton}
+            onClick={handleSubscribe}
+            className="mt-4 w-full rounded-lg bg-[#8b0000] py-2 text-white"
           >
             Subscribe Now
           </button>
@@ -107,91 +108,32 @@ const PublicReport = () => {
             </h1>
 
             <form onSubmit={handleSubmit(handleForm)} className="space-y-5">
-              {/* Photo */}
-              <div>
-                <label className="font-semibold text-gray-600">Photo</label>
-                <input
-                  type="file"
-                  {...register('photo', { required: true })}
-                  className="file-input mt-1 w-full rounded-md border border-gray-300 focus:ring-2 focus:ring-[#8b0000] focus:outline-none"
-                />
-                {errors.photo && (
-                  <p className="mt-1 text-sm text-red-600">Photo is required</p>
-                )}
-              </div>
+              <input type="file" {...register("photo", { required: true })} />
+              {errors.photo && <p className="text-red-600">Photo required</p>}
 
-              {/* Title */}
-              <div>
-                <label className="font-semibold text-gray-600">Title</label>
-                <input
-                  type="text"
-                  placeholder="Enter issue title"
-                  {...register('title', { required: true })}
-                  className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-[#8b0000] focus:outline-none"
-                />
-                {errors.title && (
-                  <p className="mt-1 text-sm text-red-600">Title is required</p>
-                )}
-              </div>
+              <input placeholder="Title" {...register("title", { required: true })} />
+              {errors.title && <p className="text-red-600">Title required</p>}
 
-              {/* Category */}
-              <div>
-                <label className="font-semibold text-gray-600">Category</label>
-                <select
-                  {...register('category', { required: true })}
-                  className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-[#8b0000] focus:outline-none"
-                >
-                  <option value="">Select a category</option>
-                  <option value="Broken Streetlights">Broken Streetlights</option>
-                  <option value="Potholes">Potholes</option>
-                  <option value="Water Leakage">Water Leakage</option>
-                  <option value="Garbage Overflow">Garbage Overflow</option>
-                  <option value="Damaged Footpaths">Damaged Footpaths</option>
-                </select>
-                {errors.category && (
-                  <p className="mt-1 text-sm text-red-600">Category is required</p>
-                )}
-              </div>
+              <select {...register("category", { required: true })}>
+                <option value="">Select category</option>
+                <option value="Potholes">Potholes</option>
+                <option value="Water Leakage">Water Leakage</option>
+                <option value="Garbage Overflow">Garbage Overflow</option>
+                <option value="Broken Streetlights">Broken Streetlights</option>
+              </select>
+              {errors.category && <p className="text-red-600">Category required</p>}
 
-              {/* Location */}
-              <div>
-                <label className="font-semibold text-gray-600">Location</label>
-                <input
-                  type="text"
-                  placeholder="Enter issue location"
-                  {...register('location', { required: true })}
-                  className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-[#8b0000] focus:outline-none"
-                />
-                {errors.location && (
-                  <p className="mt-1 text-sm text-red-600">Location is required</p>
-                )}
-              </div>
+              <input placeholder="Location" {...register("location", { required: true })} />
+              {errors.location && <p className="text-red-600">Location required</p>}
 
-              {/* Description */}
-              <div>
-                <label className="font-semibold text-gray-600">Description</label>
-                <textarea
-                  rows={6}
-                  placeholder="Describe the issue..."
-                  {...register('description', { required: true })}
-                  className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-[#8b0000] focus:outline-none"
-                ></textarea>
-                {errors.description && (
-                  <p className="mt-1 text-sm text-red-600">Description is required</p>
-                )}
-              </div>
+              <textarea rows={5} {...register("description", { required: true })} />
+              {errors.description && <p className="text-red-600">Description required</p>}
 
-              {/* Submit Button */}
               <button
-                type="submit"
-                className="w-full rounded-lg bg-[#8b0000] py-3 font-semibold text-white shadow-md transition hover:bg-[#b22222]"
-                disabled={loading || user.isBlocked}
+                disabled={loading}
+                className="w-full bg-[#8b0000] py-3 text-white"
               >
-                {loading ? (
-                  <span className="loading loading-spinner loading-xs"></span>
-                ) : (
-                  'Submit Report'
-                )}
+                {loading ? "Submitting..." : "Submit Report"}
               </button>
             </form>
           </div>

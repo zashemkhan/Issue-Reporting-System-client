@@ -27,17 +27,17 @@ const AllIssues = () => {
     queryFn: async () => {
       const categoryQuery = selectedCategory ? `&category=${selectedCategory}` : '';
       const searchQuery = debouncedSearch ? `&search=${debouncedSearch}` : '';
-      const res = await axiosSecure.get(`/issues?limit=${limit}&skip=${currentPage * limit}${categoryQuery}${searchQuery}`);
-      setTotalIssues(res.data.total);
-      setTotalPages(Math.ceil(res.data.total / limit));
-      return res.data.result;
+      const res = await axiosSecure.get(
+        `/issues?limit=${limit}&skip=${currentPage * limit}${categoryQuery}${searchQuery}`
+      );
+      if(res?.data){
+        setTotalIssues(res.data.total || 0);
+        setTotalPages(Math.ceil((res.data.total || 0) / limit));
+        return res.data.data || [];
+      }
+      return [];
     },
   });
-
-  const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
-    setCurrentPage(0);
-  };
 
   if (isLoading) {
     return (
@@ -52,12 +52,10 @@ const AllIssues = () => {
   return (
     <section className="bg-gray-50 min-h-screen py-12">
       <div className="mx-auto max-w-[1400px] px-4">
-        {/* Header */}
         <h2 className="text-4xl font-extrabold text-[#8b0000] mb-8">
           All Issues ({totalIssues})
         </h2>
 
-        {/* Filters */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
           <input
             type="text"
@@ -69,7 +67,10 @@ const AllIssues = () => {
           <select
             className="w-full sm:w-1/4 rounded-xl border border-gray-300 px-4 py-2 shadow-sm focus:ring-2 focus:ring-[#8b0000] focus:outline-none"
             value={selectedCategory}
-            onChange={handleCategoryChange}
+            onChange={(e) => {
+              setSelectedCategory(e.target.value);
+              setCurrentPage(0);
+            }}
           >
             <option value="">All Categories</option>
             <option value="Broken Streetlights">Broken Streetlights</option>
@@ -80,7 +81,6 @@ const AllIssues = () => {
           </select>
         </div>
 
-        {/* Issues Grid */}
         {allIssues.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20">
             <p className="text-3xl font-bold text-gray-500">No Issues Found</p>
@@ -93,7 +93,6 @@ const AllIssues = () => {
           </div>
         )}
 
-        {/* Pagination */}
         <div className="flex flex-wrap justify-center gap-3 mt-12">
           {currentPage > 0 && (
             <button
@@ -104,20 +103,17 @@ const AllIssues = () => {
             </button>
           )}
 
-          {totalPages > 0 &&
-            [...Array(totalPages).keys()].map((i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentPage(i)}
-                className={`px-4 py-2 rounded-xl border ${
-                  i === currentPage
-                    ? 'bg-[#8b0000] text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-100'
-                } transition`}
-              >
-                {i + 1}
-              </button>
-            ))}
+          {[...Array(totalPages).keys()].map((i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i)}
+              className={`px-4 py-2 rounded-xl border ${
+                i === currentPage ? 'bg-[#8b0000] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'
+              } transition`}
+            >
+              {i + 1}
+            </button>
+          ))}
 
           {currentPage < totalPages - 1 && (
             <button
